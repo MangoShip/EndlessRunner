@@ -40,6 +40,24 @@ class Play extends Phaser.Scene{
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
+
+        //score
+        this.p1Score = 0;
+
+        //score display
+        this.scoreConfig = {
+            fontFamily: 'Courier',
+            fontSize: '28px',
+            backgroundColor: '#F3B141',
+            color: '#843605',
+            align: 'right',
+            padding: {
+                top: 5,
+                bototm: 5,
+            },
+            fixedWidth: 100
+        }
+        this.scoreLeft = this.add.text(69, 54, this.p1Score, this.scoreConfig);
     }
 
     update(){
@@ -69,6 +87,7 @@ class Play extends Phaser.Scene{
             this.player.health += 10;
         }
         console.log(this.player.health);
+        
     }
 
     shoot(){
