@@ -58,16 +58,27 @@ class TankSelection extends Phaser.Scene{
         // define keys
         keyONE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
         keyTWO = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
+        keyTHREE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE);
+        keyFOUR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR);
     }
 
     update(){
         if(Phaser.Input.Keyboard.JustDown(keyONE)){
-            // play
+            // play with T-34
             this.scene.start("playScene");
         }
         if(Phaser.Input.Keyboard.JustDown(keyTWO)){
+            // play with SU-85
+            this.scene.start("playScene");
+        }
+        if(Phaser.Input.Keyboard.JustDown(keyTHREE)){
+            // play with KV-2
+            this.scene.start("playScene");
+        }
+        if(Phaser.Input.Keyboard.JustDown(keyFOUR)){
             // go back to main menu
             this.scene.start("mainMenuScene");
         }
     }
 }
+
