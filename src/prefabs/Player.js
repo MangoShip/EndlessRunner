@@ -4,6 +4,7 @@ class Player extends Phaser.GameObjects.Sprite{
 
         scene.add.existing(this);
         this.isFiring = false;
+        this.health = 50;
     }
 
     update(){

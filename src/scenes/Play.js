@@ -58,7 +58,7 @@ class Play extends Phaser.Scene{
         if(this.checkObstacleCollision(this.player, this.rock)){
             this.rock.reset();
         }
-        
+        console.log(this.player.health);
     }
 
     shoot(){

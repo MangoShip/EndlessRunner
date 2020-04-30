@@ -7,7 +7,15 @@ class Enemy extends Phaser.GameObjects.Sprite{
     }
 
     update(){
-        
+        this.x -= 1;
+
+        //wraparound the spaceship from left to right
+        if(this.x <= 0-this.width) {
+            this.x = game.config.width;
+        }
     }
 
+    reset() {
+        this.x = game.config.width;
+    }
 }
