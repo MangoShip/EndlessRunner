@@ -42,12 +42,12 @@ class TankSelection extends Phaser.Scene{
         
         //T-34 Attributes
         this.add.text(centerX, centerY - textSpacer, 'Armor: 1', menuConfig).setOrigin(2,-1.25);
-        this.add.text(centerX, centerY - textSpacer, 'Damage: 3', menuConfig).setOrigin(1.85,-2.5);
+        this.add.text(centerX, centerY - textSpacer, 'Damage: 2', menuConfig).setOrigin(1.85,-2.5);
         this.add.text(centerX, centerY - textSpacer, 'Speed: 3', menuConfig).setOrigin(2,-3.7);
         
         //SU-85 Attributes
-        this.add.text(centerX, centerY - textSpacer/3, 'Armor: 3', menuConfig).setOrigin(0.5,0.75);
-        this.add.text(centerX, centerY - textSpacer/3, 'Damage: 2', menuConfig).setOrigin(0.5,-0.4);
+        this.add.text(centerX, centerY - textSpacer/3, 'Armor: 2', menuConfig).setOrigin(0.5,0.75);
+        this.add.text(centerX, centerY - textSpacer/3, 'Damage: 3', menuConfig).setOrigin(0.5,-0.4);
         this.add.text(centerX, centerY - textSpacer/3, 'Speed: 1', menuConfig).setOrigin(0.5,-1.5);
         
         //KV-2 Attributes
