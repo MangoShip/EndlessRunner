@@ -24,9 +24,6 @@ class Play extends Phaser.Scene{
         // add player
         this.player = new Player(this, 40, 132, 'player'). setOrigin(0, 0);
 
-        // add enemy
-        this.enemy = new Enemy(this, this.game.config.width, Phaser.Math.Between(0, this.game.config.height+50), 'enemy').setOrigin(0, 0);
-
         // add obstacles
         this.rock = new Obstacle(this, 500, 200, 'rock').setOrigin(0, 0);
 
@@ -41,6 +38,20 @@ class Play extends Phaser.Scene{
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
 
+        // set up enemy group and add first enemy to kick things off
+        this.enemyGroup = this.add.group({
+            runChildUpdate: true    // make sure update runs on group children
+        });
+        this.addEnemy();
+
+        this.time.addEvent({
+            delay: 7000,
+            callback: ()=>{
+                this.addEnemy();
+            },
+            loop: true
+        })
+
         //score
         this.p1Score = 0;
 
@@ -53,11 +64,16 @@ class Play extends Phaser.Scene{
             align: 'right',
             padding: {
                 top: 5,
-                bototm: 5,
+                bottom: 5,
             },
             fixedWidth: 100
         }
         this.scoreLeft = this.add.text(69, 54, this.p1Score, this.scoreConfig);
+    }
+
+    addEnemy() {
+        let enemy = new Enemy(this, this.game.config.width, Phaser.Math.Between(0, this.game.config.height+50), 'enemy').setOrigin(0, 0);
+        this.enemyGroup.add(enemy); // add it to existing group
     }
 
     update(){
@@ -67,7 +83,6 @@ class Play extends Phaser.Scene{
         // update if game isn't over
         if(!this.gameOver){
             this.player.update();
-            this.enemy.update();
             this.rock.update();
             this.powerUp.update();
         }
@@ -87,7 +102,6 @@ class Play extends Phaser.Scene{
             this.player.health += 10;
         }
         console.log(this.player.health);
-        
     }
 
     shoot(){
@@ -107,5 +121,4 @@ class Play extends Phaser.Scene{
             return false;
         }
     }
-
 }
