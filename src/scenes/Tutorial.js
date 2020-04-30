@@ -23,8 +23,10 @@ class Tutorial extends Phaser.Scene{
         let centerY = game.config.height/2;
         let textSpacer = 100;
         
-        this.add.text(centerX, centerY - textSpacer, 'TUTORIAL', menuConfig).setOrigin(0.5);
-        this.add.text(centerX, centerY - textSpacer/3, '1: GO BACK TO MAIN MENU', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY - textSpacer, 'Move Up & Down: Up & Down Arrow Keys', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY - textSpacer/3, 'Dodge Obstacles & Shoot Enemies', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY + textSpacer/3, 'Pick Up PowerUps for Upgrades', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY + textSpacer, 'Survive! Press 1 to Go Back', menuConfig).setOrigin(0.5);
         
         // define keys
         keyONE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
