@@ -42,10 +42,11 @@ class Play extends Phaser.Scene{
         this.enemyGroup = this.add.group({
             runChildUpdate: true    // make sure update runs on group children
         });
-        this.addEnemy();
+        this.addEnemy(); // first enemy tank added to enemyGroup
 
+        // a loop that spawns a new enemy tank
         this.time.addEvent({
-            delay: 7000,
+            delay: 7000, // delay time in ms 
             callback: ()=>{
                 this.addEnemy();
             },
@@ -71,6 +72,7 @@ class Play extends Phaser.Scene{
         this.scoreLeft = this.add.text(69, 54, this.p1Score, this.scoreConfig);
     }
 
+    // function that adds enemy tank to the enemyGroup
     addEnemy() {
         let enemy = new Enemy(this, this.game.config.width, Phaser.Math.Between(0, this.game.config.height+50), 'enemy').setOrigin(0, 0);
         this.enemyGroup.add(enemy); // add it to existing group
