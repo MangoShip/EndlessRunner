@@ -25,7 +25,7 @@ class Play extends Phaser.Scene{
         this.player = new Player(this, 40, 132, 'player'). setOrigin(0, 0);
 
         // add enemy
-        this.enemy = new Enemy(this, 500, 132, 'enemy').setOrigin(0, 0);
+        this.enemy = new Enemy(this, this.game.config.width, Phaser.Math.Between(0, this.game.config.height+50), 'enemy').setOrigin(0, 0);
 
         // add obstacles
         this.rock = new Obstacle(this, 500, 200, 'rock').setOrigin(0, 0);
@@ -40,7 +40,6 @@ class Play extends Phaser.Scene{
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
-
     }
 
     update(){
