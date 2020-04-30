@@ -12,6 +12,7 @@ class Enemy extends Phaser.GameObjects.Sprite{
         //wraparound the spaceship from left to right
         if(this.x <= 0-this.width) {
             this.x = game.config.width;
+            this.y = Phaser.Math.Between(0, 480);
         }
     }
 

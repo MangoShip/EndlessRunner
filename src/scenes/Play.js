@@ -44,7 +44,7 @@ class Play extends Phaser.Scene{
 
     update(){
         // scroll background
-        this.background.tilePositionX += 4;
+        this.background.tilePositionX += 0.75;
         
         // update if game isn't over
         if(!this.gameOver){
@@ -63,6 +63,7 @@ class Play extends Phaser.Scene{
             this.rock.reset();
         }
 
+        // check collision with health powerup
         if(this.checkObstacleCollision(this.player, this.powerUp)){
             this.powerUp.reset();
             this.player.health += 10;
