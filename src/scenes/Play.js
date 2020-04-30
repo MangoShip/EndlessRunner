@@ -11,6 +11,7 @@ class Play extends Phaser.Scene{
         this.load.image('enemy_bullet', './assets/enemy_bullet.png');
         this.load.image('rock', './assets/rock.png');
         this.load.image('background', './assets/background.png');
+        this.load.image('power_up', './assets/enemy_bullet.png');
     }
 
     create(){
@@ -32,6 +33,9 @@ class Play extends Phaser.Scene{
         /// add bullets
         this.bulletGroup = new BulletGroup(this);
 
+        // add powerup
+        this.powerUp = new PowerUp(this, 600, 200, 'power_up').setOrigin(0,0);
+
         // define keyboard keys
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
@@ -48,6 +52,7 @@ class Play extends Phaser.Scene{
             this.player.update();
             this.enemy.update();
             this.rock.update();
+            this.powerUp.update();
         }
 
         if(keyF.isDown){
@@ -57,6 +62,11 @@ class Play extends Phaser.Scene{
         // check collisions (player and rock)
         if(this.checkObstacleCollision(this.player, this.rock)){
             this.rock.reset();
+        }
+
+        if(this.checkObstacleCollision(this.player, this.powerUp)){
+            this.powerUp.reset();
+            this.player.health += 10;
         }
         console.log(this.player.health);
     }
