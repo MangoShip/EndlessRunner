@@ -7,7 +7,7 @@ class TankSelection extends Phaser.Scene{
         // load images/tile sprite
         this.load.image('T34', './assets/T34.png');
         this.load.image('SU85', './assets/SU85.png');
-        this.load.image('kv2', './assets/kv2.png');
+        this.load.image('kv2', './assets/kv2.png')
     }
 
     create(){
