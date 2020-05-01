@@ -104,15 +104,21 @@ class Play extends Phaser.Scene{
         }
         this.scoreLeft = this.add.text(69, 54, this.p1Score, this.scoreConfig);
 
-        this.physics.add.collider(this.bullets, this.enemyGroup, () => {
-            console.log("Hit");
-        }, null, this);
-
-        this.physics.add.collider(this.player, this.enemyGroup, () => {
-            console.log("Hit");
-        }, null, this);
+        this.physics.add.collider(this.bullets, this.enemyGroup, this.handleCollision, null, this);
+        this.physics.add.collider(this.player, this.enemyGroup, this.playerCollision, null, this);
     }
 
+    // Handles collision between bullet and enemy
+    handleCollision(bullet, enemy){
+        bullet.destroy(true);
+        enemy.destroy(true);
+    }
+    
+    // Handles collision between player and enemy
+    playerCollision(player, enemy){
+        enemy.destroy(true);
+    }
+    
     // Changed coordinates for spawn to avoid sprites going over screen. 
     // function that adds enemy tank to the enemyGroup
     addEnemyTank() {
@@ -170,6 +176,7 @@ class Play extends Phaser.Scene{
 
     shoot(x, y){
         let bullet = this.bullets.getFirstDead(false);
+        //console.log(bullet);
         if(bullet){
             bullet.fire(x, y);
         }

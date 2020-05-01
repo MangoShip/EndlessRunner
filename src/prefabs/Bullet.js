@@ -1,6 +1,13 @@
 class Bullet extends Phaser.Physics.Arcade.Sprite{
     constructor(scene, x, y){
         super(scene, x, y, 'player_bullet');
+
+        this.scene = scene;
+        /*
+        this.scene.physics.world.enable(this);
+        this.scene.physics.add.collider(this, this.scene.enemyGroup, () => {
+            console.log("hit");
+        }, null, this);*/
     }
 
     fire(x, y){
