@@ -4,17 +4,46 @@ class TankSelection extends Phaser.Scene{
     }
 
     preload(){
-        // load images/tile sprite
-        this.load.image('T34', './assets/T34.png');
-        this.load.image('SU85', './assets/SU85.png');
-        this.load.image('kv2', './assets/kv2.png');
+        // load spritesheets
+        this.load.spritesheet('player1', './assets/T34.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
+        this.load.spritesheet('player2', './assets/SU85.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
+        this.load.spritesheet('player3', './assets/KV2.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
     }
 
     create(){
+        // create animation for T34
+        this.anims.create({
+            key: 't34_moving',
+            frames: this.anims.generateFrameNumbers('player1', {start: 0, end: 3, first: 0}),
+            frameRate: 6,
+            repeat: -1
+        })
+
+        // create animation for SU85
+        this.anims.create({
+            key: 'su85_moving',
+            frames: this.anims.generateFrameNumbers('player2', {start: 0, end: 3, first: 0}),
+            frameRate: 6,
+            repeat: -1
+        })
+
+        // create animation for KV2
+        this.anims.create({
+            key: 'kv2_moving',
+            frames: this.anims.generateFrameNumbers('player3', {start: 0, end: 3, first: 0}),
+            frameRate: 6,
+            repeat: -1
+        })
+
         //add tank selection menu image
-        this.add.image(500, 100, 'T34').setOrigin(7,0);
-        this.add.image(600, 100, 'SU85').setOrigin(5,0);
-        this.add.image(650, 100, 'kv2').setOrigin(3,0);
+        this.tank1 = this.add.sprite(70, 70, 'player1').setOrigin(0,0).setScale(2);
+        this.tank1.anims.play('t34_moving');
+
+        this.tank2 = this.add.sprite(270, 70, 'player2').setOrigin(0,0).setScale(2);
+        this.tank2.anims.play('su85_moving');
+
+        this.tank3 = this.add.sprite(450, 70, 'player3').setOrigin(0,0).setScale(2);
+        this.tank3.anims.play('kv2_moving');
         // menu display
         let menuConfig = {
             fontFamily: 'Courier',
