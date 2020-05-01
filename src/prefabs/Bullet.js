@@ -1,24 +1,3 @@
-class BulletGroup extends Phaser.Physics.Arcade.Group{
-    constructor(scene){
-        super(scene.physics.world, scene);
-
-        this.createMultiple({
-            classType: Bullet,
-            frameQuantity: 30,
-            active: false,
-            visible: false,
-            key: 'bullet'
-        })
-    }
-
-    shootBullet(x, y){
-        let bullet = this.getFirstDead(false);
-        if(bullet){
-            bullet.fire(x, y);
-        }
-    }
-
-}
 class Bullet extends Phaser.Physics.Arcade.Sprite{
     constructor(scene, x, y){
         super(scene, x, y, 'player_bullet');
@@ -26,6 +5,10 @@ class Bullet extends Phaser.Physics.Arcade.Sprite{
 
     fire(x, y){
         //console.log("fire");
+
+        this.setDebugBodyColor(0xFF0000);
+        this.body.onCollide = true;
+
         if(game.settings.tank == 1 || game.settings.tank == 2){
             this.body.reset(x + 95, y + 16);
         }

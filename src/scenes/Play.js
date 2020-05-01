@@ -27,17 +27,27 @@ class Play extends Phaser.Scene{
      
         // add player according to the tank that player has chosen
         if(game.settings.tank == 1){
+            // T34
             this.player = new Player(this, 40, 132, 'player1').setOrigin(0, 0).setScale(1.5);
         }
         else if(game.settings.tank == 2){
+            // SU85
             this.player = new Player(this, 40, 132, 'player2').setOrigin(0, 0).setScale(1.5);
         }
         else{
+            // KV2
             this.player = new Player(this, 40, 132, 'player3').setOrigin(0, 0).setScale(1.5);
         }
 
         // add bullets
-        this.bulletGroup = new BulletGroup(this);
+        this.bullets = this.physics.add.group({
+            classType: Bullet,
+            frameQuantity: 30,
+            active: false,
+            visible: false,
+            key: 'bullet',
+            runChildUpdate: true
+        })
 
         // add powerup
         this.powerUp = new PowerUp(this, 600, 200, 'power_up').setOrigin(0,0);
@@ -87,29 +97,34 @@ class Play extends Phaser.Scene{
             fixedWidth: 100
         }
         this.scoreLeft = this.add.text(69, 54, this.p1Score, this.scoreConfig);
+
+        this.physics.add.overlap(this.bullets, this.enemyGroup, () => {
+            console.log("Hit");
+        }, null, this);
     }
 
+    // Changed coordinates for spawn to avoid sprites going over screen. 
     // function that adds enemy tank to the enemyGroup
     addEnemyTank() {
-        let enemy = new EnemyTank(this, this.game.config.width, Phaser.Math.Between(0, this.game.config.height+50), 'enemy_tank').setOrigin(0, 0);
+        let enemy = new EnemyTank(this, this.game.config.width, Phaser.Math.Between(20, 400), 'enemy_tank').setOrigin(0, 0).setScale(2);
         this.enemyGroup.add(enemy); // add it to existing group
     }
 
     // function that adds enemy infantry to the enemyGroup
     addEnemyInfantry() {
-        let enemy = new EnemyInfantry(this, this.game.config.width, Phaser.Math.Between(0, this.game.config.height+50), 'enemy_infantry').setOrigin(0, 0);
+        let enemy = new EnemyInfantry(this, this.game.config.width, Phaser.Math.Between(20, 400), 'enemy_infantry').setOrigin(0, 0).setScale(2);
         this.enemyGroup.add(enemy); // add it to existing group
     }
 
     // function that adds rocks
     addRock() {
-        let rock = new Rock(this, this.game.config.width, Phaser.Math.Between(0, this.game.config.height+50), 'rock').setOrigin(0, 0);
+        let rock = new Rock(this, this.game.config.width, Phaser.Math.Between(34, 400), 'rock').setOrigin(0, 0).setScale(1);
         this.enemyGroup.add(rock); // add it to existing group
     }
 
     // function that adds trees
     addTree() {
-        let tree = new Tree(this, this.game.config.width, Phaser.Math.Between(0, this.game.config.height+50), 'tree').setOrigin(0, 0);
+        let tree = new Tree(this, this.game.config.width, Phaser.Math.Between(80, 350), 'tree').setOrigin(0, 0).setScale(2);
         this.enemyGroup.add(tree); // add it to existing group
     }
 
@@ -125,7 +140,7 @@ class Play extends Phaser.Scene{
 
         // Add delay between each shooting. 
         if(this.input.keyboard.checkDown(keyF, 250)){
-            this.shoot();
+            this.shoot(this.player.x, this.player.y);
         }
        
         // check collisions (player and rock)
@@ -138,11 +153,14 @@ class Play extends Phaser.Scene{
             this.powerUp.reset();
             this.player.health += 10;
         }
-        console.log(this.player.health);
+        //console.log(this.player.health);
     }
 
-    shoot(){
-        this.bulletGroup.shootBullet(this.player.x, this.player.y);
+    shoot(x, y){
+        let bullet = this.bullets.getFirstDead(false);
+        if(bullet){
+            bullet.fire(x, y);
+        }
     }
 
     // check collision for player and obstacle

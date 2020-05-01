@@ -1,11 +1,11 @@
 let config = {
-    type: Phaser.AUTO,
+    type: Phaser.CANVAS,
     width: 640,
     height: 480,
     physics: {
         default: 'arcade',
         arcade: {
-            debug: false,
+            debug: true,
             gravity: { y: 0}
         }
     },
