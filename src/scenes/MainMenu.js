@@ -4,16 +4,19 @@ class MainMenu extends Phaser.Scene{
     }
 
     preload(){
- 
+        this.load.image('background', './assets/background.png');
     }
 
     create(){
+        // place tile sprite
+        this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0, 0);
+        
         // menu display
         let menuConfig = {
-            fontFamily: 'Courier',
+            fontFamily: 'Arial',
             fontSize: '28px',
-            backgroundColor: '#F3B141',
-            color: "#843605",
+            backgroundColor: '#1A5B12',
+            color: "#FFFFFF",
             align: 'right',
             padding: {
                 top: 5,
@@ -36,7 +39,6 @@ class MainMenu extends Phaser.Scene{
         keyONE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
         keyTWO = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
         keyTHREE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE);
-
     }
 
     update(){
