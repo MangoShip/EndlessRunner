@@ -64,25 +64,31 @@ class TankSelection extends Phaser.Scene{
         let textSpacer = 100;
         
         //added tank sprites for selection
-        this.add.text(centerX, centerY - textSpacer, '1: T-34', menuConfig).setOrigin(2.25,0);
-        this.add.text(centerX, centerY - textSpacer/3, '2: SU-85', menuConfig).setOrigin(0.5,1.85);
-        this.add.text(centerX, centerY + textSpacer/3, '3: KV-2', menuConfig).setOrigin(-1, 3.7);
-        this.add.text(centerX, centerY + textSpacer, '4: Go Back to Main Menu', menuConfig).setOrigin(0.5, 0);
+        this.add.text(85, 130, "T-34").setScale(1.5);
+        this.add.text(280, 130, "SU-85").setScale(1.5);
+        this.add.text(475, 130, "KV-2").setScale(1.5);
         
         //T-34 Attributes
-        this.add.text(centerX, centerY - textSpacer, 'Armor: 1', menuConfig).setOrigin(2,-1.25);
-        this.add.text(centerX, centerY - textSpacer, 'Damage: 2', menuConfig).setOrigin(1.85,-2.5);
-        this.add.text(centerX, centerY - textSpacer, 'Speed: 3', menuConfig).setOrigin(2,-3.7);
-        
-        //SU-85 Attributes
-        this.add.text(centerX, centerY - textSpacer/3, 'Armor: 2', menuConfig).setOrigin(0.5,0.75);
-        this.add.text(centerX, centerY - textSpacer/3, 'Damage: 3', menuConfig).setOrigin(0.5,-0.4);
-        this.add.text(centerX, centerY - textSpacer/3, 'Speed: 1', menuConfig).setOrigin(0.5,-1.5);
-        
+        this.add.text(65, 180, "Armor: 1").setScale(1.5);
+        this.add.text(62, 220, "Damage: 2").setScale(1.5);
+        this.add.text(62, 260, "Speed: 3").setScale(1.5);
+
+       //SU-85 Attributes
+       this.add.text(260, 180, "Armor: 2").setScale(1.5);
+       this.add.text(257, 220, "Damage: 3").setScale(1.5);
+       this.add.text(257, 260, "Speed: 1").setScale(1.5);
+
         //KV-2 Attributes
-        this.add.text(centerX, centerY - textSpacer/3, 'Armor: 3', menuConfig).setOrigin(-0.85,0.75);
-        this.add.text(centerX, centerY - textSpacer/3, 'Damage: 1', menuConfig).setOrigin(-0.7,-0.3);
-        this.add.text(centerX, centerY - textSpacer/3, 'Speed: 2', menuConfig).setOrigin(-0.8,-1.5);
+        this.add.text(455, 180, "Armor: 3").setScale(1.5);
+        this.add.text(452, 220, "Damage: 1").setScale(1.5);
+        this.add.text(452, 260, "Speed: 2").setScale(1.5);
+        
+        // tank selection and main menu buttons
+        this.add.text(60, 310, "Press: 1").setScale(1.5);
+        this.add.text(255, 310, "Press: 2").setScale(1.5);
+        this.add.text(450, 310, "Press: 3").setScale(1.5);
+        this.add.text(150, 370, "4: Go Back To Main Menu").setScale(1.5);
+        
 
         // define keys
         keyONE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
