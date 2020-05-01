@@ -26,7 +26,12 @@ class Bullet extends Phaser.Physics.Arcade.Sprite{
 
     fire(x, y){
         //console.log("fire");
-        this.body.reset(x + 65, y + 10);
+        if(game.settings.tank == 1 || game.settings.tank == 2){
+            this.body.reset(x + 95, y + 16);
+        }
+        else{
+            this.body.reset(x + 75, y + 10);
+        }
         this.setActive(true);
         this.setVisible(true);
         this.setVelocityX(300);
