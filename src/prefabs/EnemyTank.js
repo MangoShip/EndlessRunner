@@ -3,6 +3,7 @@ class EnemyTank extends Phaser.Physics.Arcade.Sprite{
         super(scene, x, y, texture);
 
         scene.add.existing(this);
+        this.anims.play('tank_moving');
     }
 
     update(){   

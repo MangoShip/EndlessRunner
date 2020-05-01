@@ -9,7 +9,7 @@ class Play extends Phaser.Scene{
         this.load.spritesheet('player2', './assets/SU85.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
         this.load.spritesheet('player3', './assets/KV2.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
         this.load.image('player_bullet', './assets/player_bullet.png');
-        this.load.image('enemy_tank', './assets/enemytank.png');
+        this.load.spritesheet('enemy_tank', './assets/enemytank.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
         this.load.image('enemy_bullet', './assets/enemy_bullet.png');
         this.load.image('rock', './assets/rock.png');
         this.load.image('tree', './assets/tree.png');
@@ -45,6 +45,14 @@ class Play extends Phaser.Scene{
         this.anims.create({
             key: 'kv2_moving',
             frames: this.anims.generateFrameNumbers('player3', {start: 0, end: 3, first: 0}),
+            frameRate: 6,
+            repeat: -1
+        })
+
+        // create animation for enemy tank
+        this.anims.create({
+            key: 'tank_moving',
+            frames: this.anims.generateFrameNumbers('enemy_tank', {start: 0, end: 3, first: 0}),
             frameRate: 6,
             repeat: -1
         })
