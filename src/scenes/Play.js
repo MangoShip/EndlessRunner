@@ -5,11 +5,15 @@ class Play extends Phaser.Scene{
 
     preload(){
         // load images/tile sprite
-        this.load.image('player', './assets/player.png');
+        this.load.image('player', './assets/T34.png');
+        this.load.image('player', './assets/SU85.png');
+        this.load.image('player', './assets/KV2.png');
         this.load.image('player_bullet', './assets/player_bullet.png');
-        this.load.image('enemy', './assets/enemy.png');
+        this.load.image('enemy_infantry', './assets/enemy1.png');
+        this.load.image('enemy_tank', './assets/enemy2.png');
         this.load.image('enemy_bullet', './assets/enemy_bullet.png');
         this.load.image('rock', './assets/rock.png');
+        this.load.image('tree', './assets/tree.png');
         this.load.image('background', './assets/background.png');
         this.load.image('power_up', './assets/enemy_bullet.png');
     }
@@ -23,9 +27,6 @@ class Play extends Phaser.Scene{
              
         // add player
         this.player = new Player(this, 40, 132, 'player'). setOrigin(0, 0);
-
-        // add obstacles
-        this.rock = new Obstacle(this, 500, 200, 'rock').setOrigin(0, 0);
 
         /// add bullets
         this.bulletGroup = new BulletGroup(this);
@@ -42,13 +43,21 @@ class Play extends Phaser.Scene{
         this.enemyGroup = this.add.group({
             runChildUpdate: true    // make sure update runs on group children
         });
-        this.addEnemy(); // first enemy tank added to enemyGroup
+        this.addEnemyTank(); // first enemy tank added to enemyGroup
+        this.addEnemyInfantry(); // first enemy infantry added to enemyGroup
 
-        // a loop that spawns a new enemy tank
+        // a loop that spawns enemies
         this.time.addEvent({
             delay: 7000, // delay time in ms 
             callback: ()=>{
-                this.addEnemy();
+                this.addEnemyTank();
+                this.addEnemyInfantry();
+            },
+
+            delay: 10000, // delay time in ms 
+            callback: ()=>{
+                this.addRock();
+                this.addTree();
             },
             loop: true
         })
@@ -73,9 +82,27 @@ class Play extends Phaser.Scene{
     }
 
     // function that adds enemy tank to the enemyGroup
-    addEnemy() {
-        let enemy = new Enemy(this, this.game.config.width, Phaser.Math.Between(0, this.game.config.height+50), 'enemy').setOrigin(0, 0);
+    addEnemyTank() {
+        let enemy = new EnemyTank(this, this.game.config.width, Phaser.Math.Between(0, this.game.config.height+50), 'enemy_tank').setOrigin(0, 0);
         this.enemyGroup.add(enemy); // add it to existing group
+    }
+
+    // function that adds enemy infantry to the enemyGroup
+    addEnemyInfantry() {
+        let enemy = new EnemyInfantry(this, this.game.config.width, Phaser.Math.Between(0, this.game.config.height+50), 'enemy_infantry').setOrigin(0, 0);
+        this.enemyGroup.add(enemy); // add it to existing group
+    }
+
+    // function that adds rocks
+    addRock() {
+        let rock = new Rock(this, this.game.config.width, Phaser.Math.Between(0, this.game.config.height+50), 'rock').setOrigin(0, 0);
+        this.enemyGroup.add(rock); // add it to existing group
+    }
+
+    // function that adds trees
+    addTree() {
+        let tree = new Tree(this, this.game.config.width, Phaser.Math.Between(0, this.game.config.height+50), 'tree').setOrigin(0, 0);
+        this.enemyGroup.add(tree); // add it to existing group
     }
 
     update(){
@@ -85,7 +112,6 @@ class Play extends Phaser.Scene{
         // update if game isn't over
         if(!this.gameOver){
             this.player.update();
-            this.rock.update();
             this.powerUp.update();
         }
 
@@ -94,9 +120,9 @@ class Play extends Phaser.Scene{
         }
        
         // check collisions (player and rock)
-        if(this.checkObstacleCollision(this.player, this.rock)){
-            this.rock.reset();
-        }
+        //if(this.checkObstacleCollision(this.player, this.rock)){
+        //   this.rock.reset();
+        //}
 
         // check collision with health powerup
         if(this.checkObstacleCollision(this.player, this.powerUp)){
