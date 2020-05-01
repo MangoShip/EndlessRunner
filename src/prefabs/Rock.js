@@ -1,4 +1,4 @@
-class Obstacle extends Phaser.GameObjects.Sprite{
+class Rock extends Phaser.GameObjects.Sprite{
     constructor(scene, x, y, texture){
         super(scene, x, y, texture);
 
@@ -9,11 +9,10 @@ class Obstacle extends Phaser.GameObjects.Sprite{
 
     update(){
         // approach to player
-        this.x -= 1;
+        this.x -= 0.75;
     }
 
     reset(){
         this.x = this.origin;
     }
-
 }

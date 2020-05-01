@@ -1,4 +1,4 @@
-class Enemy extends Phaser.GameObjects.Sprite{
+class EnemyInfantry extends Phaser.GameObjects.Sprite{
     constructor(scene, x, y, texture){
         super(scene, x, y, texture);
 
@@ -7,7 +7,7 @@ class Enemy extends Phaser.GameObjects.Sprite{
     }
 
     update(){
-        this.x -= 1;
+        this.x -= 1.15;
 
         //wraparound the spaceship from left to right
         if(this.x <= 0-this.width) {
