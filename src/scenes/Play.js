@@ -28,15 +28,21 @@ class Play extends Phaser.Scene{
         // add player according to the tank that player has chosen
         if(game.settings.tank == 1){
             // T34
-            this.player = new Player(this, 40, 132, 'player1').setOrigin(0, 0).setScale(1.5);
+            this.player = this.physics.add.sprite(40, 132, 'player1').setOrigin(0, 0).setScale(1.5);
+            this.player.body.setSize(59,19);
+            this.player.body.setOffset(1,7); 
         }
         else if(game.settings.tank == 2){
             // SU85
-            this.player = new Player(this, 40, 132, 'player2').setOrigin(0, 0).setScale(1.5);
+            this.player = this.physics.add.sprite(40, 132, 'player2').setOrigin(0, 0).setScale(1.5);
+            this.player.body.setSize(59,19);
+            this.player.body.setOffset(1,7); 
         }
         else{
             // KV2
-            this.player = new Player(this, 40, 132, 'player3').setOrigin(0, 0).setScale(1.5);
+            this.player = this.physics.add.sprite(40, 132, 'player3').setOrigin(0, 0).setScale(1.5);
+            this.player.body.setSize(45,23);
+            this.player.body.setOffset(1,3); 
         }
 
         // add bullets
@@ -58,7 +64,7 @@ class Play extends Phaser.Scene{
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
 
         // set up enemy group and add first enemy to kick things off
-        this.enemyGroup = this.add.group({
+        this.enemyGroup = this.physics.add.group({
             runChildUpdate: true    // make sure update runs on group children
         });
         this.addEnemyTank(); // first enemy tank added to enemyGroup
@@ -98,7 +104,11 @@ class Play extends Phaser.Scene{
         }
         this.scoreLeft = this.add.text(69, 54, this.p1Score, this.scoreConfig);
 
-        this.physics.add.overlap(this.bullets, this.enemyGroup, () => {
+        this.physics.add.collider(this.bullets, this.enemyGroup, () => {
+            console.log("Hit");
+        }, null, this);
+
+        this.physics.add.collider(this.player, this.enemyGroup, () => {
             console.log("Hit");
         }, null, this);
     }
@@ -134,8 +144,21 @@ class Play extends Phaser.Scene{
         
         // update if game isn't over
         if(!this.gameOver){
-            this.player.update();
             this.powerUp.update();
+        }
+
+        // move player up
+        if(keyUP.isDown){
+            if(this.player.y > 0){
+                this.player.y -= 2;
+            }
+        }
+
+        // move player down
+        if(keyDOWN.isDown){
+            if(this.player.y < 430){
+                this.player.y += 2;
+            }
         }
 
         // Add delay between each shooting. 
@@ -143,17 +166,6 @@ class Play extends Phaser.Scene{
             this.shoot(this.player.x, this.player.y);
         }
        
-        // check collisions (player and rock)
-        //if(this.checkObstacleCollision(this.player, this.rock)){
-        //   this.rock.reset();
-        //}
-
-        // check collision with health powerup
-        if(this.checkObstacleCollision(this.player, this.powerUp)){
-            this.powerUp.reset();
-            this.player.health += 10;
-        }
-        //console.log(this.player.health);
     }
 
     shoot(x, y){
@@ -163,17 +175,4 @@ class Play extends Phaser.Scene{
         }
     }
 
-    // check collision for player and obstacle
-    checkObstacleCollision(player, obstacle){
-        // simple AABB checking
-        if(player.x < obstacle.x + obstacle.width && 
-           player.x + player.width > obstacle.x && 
-           player.y < obstacle.y + obstacle.height && 
-           player.height + player.y > obstacle.y){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
 }

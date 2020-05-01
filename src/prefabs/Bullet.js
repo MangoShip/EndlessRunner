@@ -4,11 +4,6 @@ class Bullet extends Phaser.Physics.Arcade.Sprite{
     }
 
     fire(x, y){
-        //console.log("fire");
-
-        this.setDebugBodyColor(0xFF0000);
-        this.body.onCollide = true;
-
         if(game.settings.tank == 1 || game.settings.tank == 2){
             this.body.reset(x + 95, y + 16);
         }

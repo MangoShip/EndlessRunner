@@ -5,7 +5,12 @@ class EnemyTank extends Phaser.Physics.Arcade.Sprite{
         scene.add.existing(this);
     }
 
-    update(){       
+    update(){   
+        // hitbox size
+        this.body.setSize(60,19);
+        // hitbox coordinate
+        this.body.setOffset(0,7); 
+
         this.x -= 1;
 
         //wraparound the spaceship from left to right
@@ -13,6 +18,7 @@ class EnemyTank extends Phaser.Physics.Arcade.Sprite{
             this.x = game.config.width;
             this.y = Phaser.Math.Between(20, 400);
         }
+
     }
 
     reset() {

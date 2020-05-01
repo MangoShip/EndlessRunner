@@ -1,4 +1,4 @@
-class EnemyInfantry extends Phaser.GameObjects.Sprite{
+class EnemyInfantry extends Phaser.Physics.Arcade.Sprite{
     constructor(scene, x, y, texture){
         super(scene, x, y, texture);
 
@@ -7,6 +7,11 @@ class EnemyInfantry extends Phaser.GameObjects.Sprite{
     }
 
     update(){
+        // hitbox size
+        this.body.setSize(42, 33);
+        // hitbox coordinate
+        this.body.setOffset(1, 3); 
+
         this.x -= 1.15;
 
         //wraparound the spaceship from left to right

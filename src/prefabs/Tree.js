@@ -1,4 +1,4 @@
-class Tree extends Phaser.GameObjects.Sprite{
+class Tree extends Phaser.Physics.Arcade.Sprite{
     constructor(scene, x, y, texture){
         super(scene, x, y, texture);
 
@@ -8,6 +8,11 @@ class Tree extends Phaser.GameObjects.Sprite{
     }
 
     update(){
+        // hitbox size
+        this.body.setSize(50,55);
+        // hitbox coordinate
+        this.body.setOffset(1,0); 
+        
         // approach to player
         this.x -= 0.75;
     }
