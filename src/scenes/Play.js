@@ -150,6 +150,8 @@ class Play extends Phaser.Scene{
         //score
         this.Score = 0;
 
+        this.playerHealth = 3;
+
         //score display
         this.scoreConfig = {
             fontFamily: 'Courier',
@@ -164,6 +166,7 @@ class Play extends Phaser.Scene{
             fixedWidth: 100
         }
         this.scoreLeft = this.add.text(69, 54, this.Score, this.scoreConfig);
+        this.healthDisplay = this.add.text(250, 54, 'Hp:'+this.playerHealth, this.scoreConfig);
 
         this.physics.add.collider(this.bullets, this.enemyGroup, this.handleCollision, null, this);
         this.physics.add.collider(this.player, this.enemyGroup, this.playerCollision, null, this);
@@ -177,6 +180,8 @@ class Play extends Phaser.Scene{
     
     // Handles collision between player and enemy
     playerCollision(player, enemy){
+        this.playerHealth -= 1;
+        this.healthDisplay.text = 'Hp:' + this.playerHealth;
         enemy.destroy(true);
     }
     
@@ -209,9 +214,9 @@ class Play extends Phaser.Scene{
         // scroll background
         this.background.tilePositionX += 0.75;
         
-        // update if game isn't over
-        if(!this.gameOver){
-            this.powerUp.update();
+        // gameover when playerHealth is 0
+        if(this.playerHealth == 0){
+            console.log("GameOver");
         }
 
         // move player up
