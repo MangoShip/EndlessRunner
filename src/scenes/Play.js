@@ -9,13 +9,13 @@ class Play extends Phaser.Scene{
         this.load.image('player2', './assets/SU85.png');
         this.load.image('player3', './assets/KV2.png');
         this.load.image('player_bullet', './assets/player_bullet.png');
-        this.load.image('enemy_infantry', './assets/enemy1.png');
-        this.load.image('enemy_tank', './assets/enemy2.png');
+        this.load.image('enemy_tank', './assets/enemytank.png');
         this.load.image('enemy_bullet', './assets/enemy_bullet.png');
         this.load.image('rock', './assets/rock.png');
         this.load.image('tree', './assets/tree.png');
         this.load.image('background', './assets/background.png');
         this.load.image('power_up', './assets/enemy_bullet.png');
+        this.load.spritesheet('enemy_infantry', './assets/enemyinfantry.png', {frameWidth: 50, frameHeight: 40, startFrame: 0, endFrame: 3});
     }
 
     create(){
@@ -44,6 +44,13 @@ class Play extends Phaser.Scene{
             this.player.body.setSize(45,23);
             this.player.body.setOffset(1,3); 
         }
+
+        this.anims.create({
+            key: 'infantry_moving',
+            frames: this.anims.generateFrameNumbers('enemy_infantry', {start: 0, end: 3, first: 0}),
+            frameRate: 3,
+            repeat: -1
+        })
 
         // add bullets
         this.bullets = this.physics.add.group({
@@ -128,7 +135,7 @@ class Play extends Phaser.Scene{
 
     // function that adds enemy infantry to the enemyGroup
     addEnemyInfantry() {
-        let enemy = new EnemyInfantry(this, this.game.config.width, Phaser.Math.Between(20, 400), 'enemy_infantry').setOrigin(0, 0).setScale(2);
+        let enemy = new EnemyInfantry(this, this.game.config.width, Phaser.Math.Between(20, 400), 'enemy_infrantry').setOrigin(0, 0).setScale(2);
         this.enemyGroup.add(enemy); // add it to existing group
     }
 

@@ -4,13 +4,14 @@ class EnemyInfantry extends Phaser.Physics.Arcade.Sprite{
 
         scene.add.existing(this);
         this.isFiring = false;
+        this.anims.play('infantry_moving');
     }
 
     update(){
         // hitbox size
-        this.body.setSize(42, 33);
+        this.body.setSize(43, 35);
         // hitbox coordinate
-        this.body.setOffset(1, 3); 
+        this.body.setOffset(0, 2); 
 
         this.x -= 1.15;
 
