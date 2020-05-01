@@ -14,12 +14,6 @@ class EnemyInfantry extends Phaser.Physics.Arcade.Sprite{
         this.body.setOffset(0, 2); 
 
         this.x -= 1.15;
-
-        //wraparound the spaceship from left to right
-        if(this.x <= 0-this.width) {
-            this.x = game.config.width;
-            this.y = Phaser.Math.Between(20, 400);
-        }
     }
 
     reset() {

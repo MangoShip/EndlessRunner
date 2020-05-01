@@ -5,9 +5,9 @@ class Play extends Phaser.Scene{
 
     preload(){
         // load images/tile sprite
-        this.load.image('player1', './assets/T34.png');
-        this.load.image('player2', './assets/SU85.png');
-        this.load.image('player3', './assets/KV2.png');
+        this.load.spritesheet('player1', './assets/T34.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
+        this.load.spritesheet('player2', './assets/SU85.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
+        this.load.spritesheet('player3', './assets/KV2.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
         this.load.image('player_bullet', './assets/player_bullet.png');
         this.load.image('enemy_tank', './assets/enemytank.png');
         this.load.image('enemy_bullet', './assets/enemy_bullet.png');
@@ -25,32 +25,60 @@ class Play extends Phaser.Scene{
         // game over flag
         this.gameOver = false;
      
-        // add player according to the tank that player has chosen
-        if(game.settings.tank == 1){
-            // T34
-            this.player = this.physics.add.sprite(40, 132, 'player1').setOrigin(0, 0).setScale(2);
-            this.player.body.setSize(59,19);
-            this.player.body.setOffset(1,7); 
-        }
-        else if(game.settings.tank == 2){
-            // SU85
-            this.player = this.physics.add.sprite(40, 132, 'player2').setOrigin(0, 0).setScale(2);
-            this.player.body.setSize(59,19);
-            this.player.body.setOffset(1,7); 
-        }
-        else{
-            // KV2
-            this.player = this.physics.add.sprite(40, 132, 'player3').setOrigin(0, 0).setScale(2);
-            this.player.body.setSize(45,23);
-            this.player.body.setOffset(1,3); 
-        }
+        // create animation for T34
+        this.anims.create({
+            key: 't34_moving',
+            frames: this.anims.generateFrameNumbers('player1', {start: 0, end: 3, first: 0}),
+            frameRate: 6,
+            repeat: -1
+        })
 
+        // create animation for SU85
+        this.anims.create({
+            key: 'su85_moving',
+            frames: this.anims.generateFrameNumbers('player2', {start: 0, end: 3, first: 0}),
+            frameRate: 6,
+            repeat: -1
+        })
+
+        // create animation for KV2
+        this.anims.create({
+            key: 'kv2_moving',
+            frames: this.anims.generateFrameNumbers('player3', {start: 0, end: 3, first: 0}),
+            frameRate: 6,
+            repeat: -1
+        })
+
+        // create animation for enemy infantry
         this.anims.create({
             key: 'infantry_moving',
             frames: this.anims.generateFrameNumbers('enemy_infantry', {start: 0, end: 3, first: 0}),
             frameRate: 3,
             repeat: -1
         })
+        
+        // add player according to the tank that player has chosen
+        if(game.settings.tank == 1){
+            // T34
+            this.player = this.physics.add.sprite(40, 132, 'player1').setOrigin(0, 0).setScale(2);
+            this.player.body.setSize(59,19);
+            this.player.body.setOffset(1,7); 
+            this.player.anims.play('t34_moving');
+        }
+        else if(game.settings.tank == 2){
+            // SU85
+            this.player = this.physics.add.sprite(40, 132, 'player2').setOrigin(0, 0).setScale(2);
+            this.player.body.setSize(59,19);
+            this.player.body.setOffset(1,7); 
+            this.player.anims.play('su85_moving');
+        }
+        else{
+            // KV2
+            this.player = this.physics.add.sprite(40, 132, 'player3').setOrigin(0, 0).setScale(2);
+            this.player.body.setSize(45,23);
+            this.player.body.setOffset(1,3); 
+            this.player.anims.play('kv2_moving');
+        }
 
         // add bullets
         this.bullets = this.physics.add.group({
@@ -112,7 +140,7 @@ class Play extends Phaser.Scene{
         })
 
         //score
-        this.p1Score = 0;
+        this.Score = 0;
 
         //score display
         this.scoreConfig = {
@@ -127,7 +155,7 @@ class Play extends Phaser.Scene{
             },
             fixedWidth: 100
         }
-        this.scoreLeft = this.add.text(69, 54, this.p1Score, this.scoreConfig);
+        this.scoreLeft = this.add.text(69, 54, this.Score, this.scoreConfig);
 
         this.physics.add.collider(this.bullets, this.enemyGroup, this.handleCollision, null, this);
         this.physics.add.collider(this.player, this.enemyGroup, this.playerCollision, null, this);
