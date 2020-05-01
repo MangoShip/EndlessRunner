@@ -10,12 +10,13 @@ class Play extends Phaser.Scene{
         this.load.spritesheet('player3', './assets/KV2.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
         this.load.image('player_bullet', './assets/player_bullet.png');
         this.load.spritesheet('enemy_tank', './assets/enemytank.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
+        this.load.spritesheet('enemy_infantry', './assets/enemyinfantry.png', {frameWidth: 50, frameHeight: 40, startFrame: 0, endFrame: 3});
         this.load.image('enemy_bullet', './assets/enemy_bullet.png');
         this.load.image('rock', './assets/rock.png');
         this.load.image('tree', './assets/tree.png');
         this.load.image('background', './assets/background.png');
         this.load.image('power_up', './assets/enemy_bullet.png');
-        this.load.spritesheet('enemy_infantry', './assets/enemyinfantry.png', {frameWidth: 50, frameHeight: 40, startFrame: 0, endFrame: 3});
+        this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 50, frameHeight: 50, startFrame: 0, endFrame: 2});
     }
 
     create(){
@@ -63,6 +64,13 @@ class Play extends Phaser.Scene{
             frames: this.anims.generateFrameNumbers('enemy_infantry', {start: 0, end: 3, first: 0}),
             frameRate: 3,
             repeat: -1
+        })
+
+        // create animation for explosion
+        this.anims.create({
+            key: 'explode',
+            frames: this.anims.generateFrameNumbers('explosion', {start: 0, end: 2, first: 0}),
+            frameRate: 5,
         })
         
         // add player according to the tank that player has chosen
@@ -175,6 +183,13 @@ class Play extends Phaser.Scene{
     // Handles collision between bullet and enemy
     handleCollision(bullet, enemy){
         bullet.destroy(true);
+
+        let boom = this.add.sprite(enemy.x, enemy.y, 'explosion').setOrigin(0, 0).setScale(2);
+        boom.anims.play('explode');
+        boom.on('animationcomplete', () => {
+            boom.destroy(true);
+        })
+        
         enemy.destroy(true);
     }
     
@@ -182,6 +197,12 @@ class Play extends Phaser.Scene{
     playerCollision(player, enemy){
         this.playerHealth -= 1;
         this.healthDisplay.text = 'Hp:' + this.playerHealth;
+        
+        let boom = this.add.sprite(enemy.x, enemy.y, 'explosion').setOrigin(0, 0).setScale(2);
+        boom.anims.play('explode');
+        boom.on('animationcomplete', () => {
+            boom.destroy(true);
+        })
         enemy.destroy(true);
     }
     
