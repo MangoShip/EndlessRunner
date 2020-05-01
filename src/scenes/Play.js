@@ -28,19 +28,19 @@ class Play extends Phaser.Scene{
         // add player according to the tank that player has chosen
         if(game.settings.tank == 1){
             // T34
-            this.player = this.physics.add.sprite(40, 132, 'player1').setOrigin(0, 0).setScale(1.5);
+            this.player = this.physics.add.sprite(40, 132, 'player1').setOrigin(0, 0).setScale(2);
             this.player.body.setSize(59,19);
             this.player.body.setOffset(1,7); 
         }
         else if(game.settings.tank == 2){
             // SU85
-            this.player = this.physics.add.sprite(40, 132, 'player2').setOrigin(0, 0).setScale(1.5);
+            this.player = this.physics.add.sprite(40, 132, 'player2').setOrigin(0, 0).setScale(2);
             this.player.body.setSize(59,19);
             this.player.body.setOffset(1,7); 
         }
         else{
             // KV2
-            this.player = this.physics.add.sprite(40, 132, 'player3').setOrigin(0, 0).setScale(1.5);
+            this.player = this.physics.add.sprite(40, 132, 'player3').setOrigin(0, 0).setScale(2);
             this.player.body.setSize(45,23);
             this.player.body.setOffset(1,3); 
         }
@@ -74,21 +74,39 @@ class Play extends Phaser.Scene{
         this.enemyGroup = this.physics.add.group({
             runChildUpdate: true    // make sure update runs on group children
         });
-        this.addEnemyTank(); // first enemy tank added to enemyGroup
-        this.addEnemyInfantry(); // first enemy infantry added to enemyGroup
 
-        // a loop that spawns enemies
+        // loop that spawns infantry
         this.time.addEvent({
-            delay: 7000, // delay time in ms 
+            delay: 7000, // every 7 seconds
             callback: ()=>{
-                this.addEnemyTank();
                 this.addEnemyInfantry();
             },
+            loop: true
+        })
 
-            delay: 10000, // delay time in ms 
+        // loop that spawns tank
+        this.time.addEvent({
+            delay: 8000, // every 8 seconds
+            callback: ()=>{
+                this.addEnemyTank();
+            },
+            loop: true
+        })
+        
+        // loop that spawns tree 
+        this.time.addEvent({
+            delay: 10000, // every 10 seconds
+            callback: ()=>{
+                this.addTree();
+            },
+            loop: true
+        })
+
+        // loop that spawns rock
+        this.time.addEvent({
+            delay: 3000, // every 3 seconds
             callback: ()=>{
                 this.addRock();
-                this.addTree();
             },
             loop: true
         })
@@ -147,7 +165,7 @@ class Play extends Phaser.Scene{
 
     // function that adds trees
     addTree() {
-        let tree = new Tree(this, this.game.config.width, Phaser.Math.Between(80, 350), 'tree').setOrigin(0, 0).setScale(2);
+        let tree = new Tree(this, this.game.config.width, Phaser.Math.Between(80, 350), 'tree').setOrigin(0, 0).setScale(1.5);
         this.enemyGroup.add(tree); // add it to existing group
     }
 
