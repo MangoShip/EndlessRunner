@@ -5,9 +5,9 @@ class Play extends Phaser.Scene{
 
     preload(){
         // load images/tile sprite
-        this.load.image('player', './assets/T34.png');
-        this.load.image('player', './assets/SU85.png');
-        this.load.image('player', './assets/KV2.png');
+        this.load.image('player1', './assets/T34.png');
+        this.load.image('player2', './assets/SU85.png');
+        this.load.image('player3', './assets/KV2.png');
         this.load.image('player_bullet', './assets/player_bullet.png');
         this.load.image('enemy_infantry', './assets/enemy1.png');
         this.load.image('enemy_tank', './assets/enemy2.png');
@@ -24,11 +24,19 @@ class Play extends Phaser.Scene{
 
         // game over flag
         this.gameOver = false;
-             
-        // add player
-        this.player = new Player(this, 40, 132, 'player'). setOrigin(0, 0);
+     
+        // add player according to the tank that player has chosen
+        if(game.settings.tank == 1){
+            this.player = new Player(this, 40, 132, 'player1').setOrigin(0, 0).setScale(1.5);
+        }
+        else if(game.settings.tank == 2){
+            this.player = new Player(this, 40, 132, 'player2').setOrigin(0, 0).setScale(1.5);
+        }
+        else{
+            this.player = new Player(this, 40, 132, 'player3').setOrigin(0, 0).setScale(1.5);
+        }
 
-        /// add bullets
+        // add bullets
         this.bulletGroup = new BulletGroup(this);
 
         // add powerup

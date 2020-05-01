@@ -66,14 +66,32 @@ class TankSelection extends Phaser.Scene{
         if(Phaser.Input.Keyboard.JustDown(keyONE)){
             // play with T-34
             this.scene.start("playScene");
+            game.settings = {
+                tank: 1,
+                armor: 1,
+                damage: 2,
+                speed: 3
+            }
         }
         if(Phaser.Input.Keyboard.JustDown(keyTWO)){
             // play with SU-85
             this.scene.start("playScene");
+            game.settings = {
+                tank: 2,
+                armor: 2,
+                damage: 3,
+                speed: 1
+            }
         }
         if(Phaser.Input.Keyboard.JustDown(keyTHREE)){
             // play with KV-2
             this.scene.start("playScene");
+            game.settings = {
+                tank: 3,
+                armor: 3,
+                damage: 1,
+                speed: 2
+            }
         }
         if(Phaser.Input.Keyboard.JustDown(keyFOUR)){
             // go back to main menu
