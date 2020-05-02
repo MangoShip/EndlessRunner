@@ -11,7 +11,9 @@ class Rock extends Phaser.Physics.Arcade.Sprite{
         // hitbox size
         this.body.setSize(46,42);
         // hitbox coordinate
-        this.body.setOffset(5,10); 
+        this.body.setOffset(5,10);
+        
+        this.body.immovable = true;
 
         // approach to player
         this.x -= 0.75;

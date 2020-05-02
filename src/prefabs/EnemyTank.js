@@ -14,6 +14,8 @@ class EnemyTank extends Phaser.Physics.Arcade.Sprite{
         // hitbox coordinate
         this.body.setOffset(0,7); 
 
+        this.body.immovable = true;
+
         this.x -= 1;
 
     }

@@ -14,6 +14,8 @@ class EnemyInfantry extends Phaser.Physics.Arcade.Sprite{
         // hitbox coordinate
         this.body.setOffset(0, 2); 
 
+        this.body.immovable = true;
+
         this.x -= 1.15;
     }
 

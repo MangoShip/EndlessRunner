@@ -196,7 +196,7 @@ class Play extends Phaser.Scene{
             },
             fixedWidth: 0
         }
-        this.score = this.add.text(40, 415, 'Score: ' + this.Score, this.scoreConfig);
+        this.scoreDisplay = this.add.text(40, 415, 'Score: ' + this.Score, this.scoreConfig);
         this.healthDisplay = this.add.text(535, 415, 'Hp: '+this.playerHealth, this.scoreConfig);
 
         this.physics.add.collider(this.bullets, this.enemyGroup, this.handleCollision, null, this);
@@ -204,16 +204,19 @@ class Play extends Phaser.Scene{
     }
 
     // Handles collision between bullet and enemy
-    handleCollision(bullet, enemy){
+    handleCollision(bullet, enemy){;
         bullet.destroy(true);
-
-        let boom = this.add.sprite(enemy.x, enemy.y, 'explosion').setOrigin(0, 0).setScale(2);
-        boom.anims.play('explode');
-        boom.on('animationcomplete', () => {
-            boom.destroy(true);
-        })
-
-        enemy.destroy(true);
+        enemy.health -= game.settings.damage;
+        if(enemy.health <= 0){
+            let boom = this.add.sprite(enemy.x, enemy.y, 'explosion').setOrigin(0, 0).setScale(2);
+            boom.anims.play('explode');
+            boom.on('animationcomplete', () => {
+                boom.destroy(true);
+            })
+            this.Score += enemy.points;
+            this.scoreDisplay.text = 'Score: ' + this.Score;
+            enemy.destroy(true);
+        }
     }
     
     // Handles collision between player and enemy

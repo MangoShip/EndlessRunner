@@ -12,6 +12,8 @@ class Tree extends Phaser.Physics.Arcade.Sprite{
         this.body.setSize(50,55);
         // hitbox coordinate
         this.body.setOffset(1,0); 
+
+        this.body.immovable = true;
         
         // approach to player
         this.x -= 0.50;
