@@ -295,7 +295,7 @@ class Play extends Phaser.Scene{
         }
 
         // Add delay between each shooting. 
-        if(this.input.keyboard.checkDown(keyF, 250)){
+        if(this.input.keyboard.checkDown(keyF, 500)){
             this.shoot(this.player.x, this.player.y);
         }
        

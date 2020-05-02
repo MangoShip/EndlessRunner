@@ -3,8 +3,8 @@ class Tree extends Phaser.Physics.Arcade.Sprite{
         super(scene, x, y, texture);
 
         scene.add.existing(this);
-        // save initial x value;
-        this.origin = x;
+        this.points = 30;
+        this.health = 3;
     }
 
     update(){
@@ -14,10 +14,7 @@ class Tree extends Phaser.Physics.Arcade.Sprite{
         this.body.setOffset(1,0); 
         
         // approach to player
-        this.x -= 0.75;
+        this.x -= 0.50;
     }
 
-    reset(){
-        this.x = this.origin;
-    }
 }

@@ -25,7 +25,7 @@ class Tutorial extends Phaser.Scene{
         
         this.add.text(85,50, "Before You Enter the Battle...").setScale(1.5);
         this.add.text(30,120, "1: Move Up & Down: Up & Down Arrow Keys").setScale(1.5);
-        this.add.text(30,170, "2: Dodge Obstacles & Shoot Enemies").setScale(1.5);
+        this.add.text(30,170, "2: Dodge or Shoot Obstacles and Enemies").setScale(1.5);
         this.add.text(30,220, "3: Pick Up Power Ups for Upgrades").setScale(1.5);
         this.add.text(30,270, "4: Survive!").setScale(1.5);
         this.add.text(85,350, "Press 1 To Go Back To Main Menu").setScale(1.5);

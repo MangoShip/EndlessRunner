@@ -3,8 +3,9 @@ class EnemyInfantry extends Phaser.Physics.Arcade.Sprite{
         super(scene, x, y, texture);
 
         scene.add.existing(this);
-        this.isFiring = false;
         this.anims.play('infantry_moving');
+        this.points = 20;
+        this.health = 2;
     }
 
     update(){
@@ -16,7 +17,4 @@ class EnemyInfantry extends Phaser.Physics.Arcade.Sprite{
         this.x -= 1.15;
     }
 
-    reset() {
-        this.x = game.config.width;
-    }
 }

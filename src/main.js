@@ -5,7 +5,7 @@ let config = {
     physics: {
         default: 'arcade',
         arcade: {
-            debug: true, // allows to see the hitbox of sprites
+            debug: false, // allows to see the hitbox of sprites
             gravity: { y: 0}
         }
     },

@@ -4,6 +4,8 @@ class EnemyTank extends Phaser.Physics.Arcade.Sprite{
 
         scene.add.existing(this);
         this.anims.play('tank_moving');
+        this.points = 20;
+        this.health = 2;
     }
 
     update(){   
@@ -14,10 +16,6 @@ class EnemyTank extends Phaser.Physics.Arcade.Sprite{
 
         this.x -= 1;
 
-    }
-
-    reset() {
-        this.x = game.config.width;
     }
 
 }

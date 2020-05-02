@@ -3,8 +3,8 @@ class Rock extends Phaser.Physics.Arcade.Sprite{
         super(scene, x, y, texture);
 
         scene.add.existing(this);
-        // save initial x value;
-        this.origin = x;
+        this.points = 10;
+        this.health = 1;
     }
 
     update(){
@@ -17,7 +17,5 @@ class Rock extends Phaser.Physics.Arcade.Sprite{
         this.x -= 0.75;
     }
 
-    reset(){
-        this.x = this.origin;
-    }
+
 }
