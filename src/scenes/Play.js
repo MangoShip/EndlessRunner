@@ -221,6 +221,7 @@ class Play extends Phaser.Scene{
         this.playerHealth -= 1;
         this.healthDisplay.text = 'Hp:' + this.playerHealth;
 
+        // Play hit animation
         if(game.settings.tank == 1){
             this.player.anims.chain('T34_hit');
             this.player.anims.stop();

@@ -69,8 +69,8 @@ class TankSelection extends Phaser.Scene{
         this.add.text(475, 130, "KV-2").setScale(1.5);
         
         //T-34 Attributes
-        this.add.text(65, 180, "Health: 1").setScale(1.5);
-        this.add.text(62, 220, "Damage: 2").setScale(1.5);
+        this.add.text(65, 180, "Health: 2").setScale(1.5);
+        this.add.text(62, 220, "Damage: 1").setScale(1.5);
         this.add.text(62, 260, "Speed: 3").setScale(1.5);
 
        //SU-85 Attributes
@@ -79,8 +79,8 @@ class TankSelection extends Phaser.Scene{
        this.add.text(257, 260, "Speed: 1").setScale(1.5);
 
         //KV-2 Attributes
-        this.add.text(455, 180, "Health: 3").setScale(1.5);
-        this.add.text(452, 220, "Damage: 1").setScale(1.5);
+        this.add.text(455, 180, "Health: 2").setScale(1.5);
+        this.add.text(452, 220, "Damage: 2").setScale(1.5);
         this.add.text(452, 260, "Speed: 2").setScale(1.5);
         
         // tank selection and main menu buttons
@@ -103,8 +103,8 @@ class TankSelection extends Phaser.Scene{
             this.scene.start("playScene");
             game.settings = {
                 tank: 1,
-                health: 1,
-                damage: 2,
+                health: 2,
+                damage: 1,
                 speed: 2
             }
         }
@@ -123,8 +123,8 @@ class TankSelection extends Phaser.Scene{
             this.scene.start("playScene");
             game.settings = {
                 tank: 3,
-                health: 3,
-                damage: 1,
+                health: 2,
+                damage: 2,
                 speed: 1
             }
         }
