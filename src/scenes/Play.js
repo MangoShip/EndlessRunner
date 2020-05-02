@@ -130,7 +130,7 @@ class Play extends Phaser.Scene{
         // add bullets
         this.bullets = this.physics.add.group({
             classType: Bullet,
-            frameQuantity: 30,
+            frameQuantity: 50,
             active: false,
             visible: false,
             key: 'bullet',
@@ -220,7 +220,9 @@ class Play extends Phaser.Scene{
         bullet_trace.on('animationcomplete', () => {
             bullet_trace.destroy(true);
         })
-        bullet.destroy(true);
+        bullet.setActive(false);
+        bullet.setVisible(false);
+
         enemy.health -= game.settings.damage;
         if(enemy.health <= 0){
             let boom = this.add.sprite(enemy.x, enemy.y, 'explosion').setOrigin(0.2).setScale(2);
@@ -311,7 +313,6 @@ class Play extends Phaser.Scene{
         if(this.playerHealth == 0){
             this.gameOver = true;
         }
-        
         // NOT game over
         if(!this.gameOver){
             // scroll background
