@@ -34,7 +34,6 @@ class Setting extends Phaser.Scene{
     update(){
         if(Phaser.Input.Keyboard.JustDown(keyONE)){
             // go back to main menu
-            this.scene.start("mainMenuScene");
+            if(this.scene.start("mainMenuScene")
         }
-    }
 }
