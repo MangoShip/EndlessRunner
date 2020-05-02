@@ -23,11 +23,12 @@ class Tutorial extends Phaser.Scene{
         let centerY = game.config.height/2;
         let textSpacer = 100;
         
-        this.add.text(85,130, "Move Up & Down: Up & Down Arrow Keys").setScale(1.5);
-        this.add.text(85,130, "Dodge Obstacles & Shoot Enemies").setScale(1.5);
-        this.add.text(85,130, "Pick Up Power Ups for Upgrades").setScale(1.5);
-        this.add.text(85,130, "Survive!").setScale(1.5);
-        this.add.text(85,130, "Press 1 To Go Back To Main Menu").setScale(1.5);
+        this.add.text(85,50, "Before You Enter the Battle...").setScale(1.5);
+        this.add.text(85,120, "Move Up & Down: Up & Down Arrow Keys").setScale(1.5);
+        this.add.text(85,170, "Dodge Obstacles & Shoot Enemies").setScale(1.5);
+        this.add.text(85,220, "Pick Up Power Ups for Upgrades").setScale(1.5);
+        this.add.text(85,270, "Survive!").setScale(1.5);
+        this.add.text(85,350, "Press 1 To Go Back To Main Menu").setScale(1.5);
 
         // define keys
         keyONE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
