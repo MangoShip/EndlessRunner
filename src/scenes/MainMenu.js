@@ -5,12 +5,11 @@ class MainMenu extends Phaser.Scene{
 
     preload(){
         this.load.image('background', './assets/background.png');
-        // load background music
-        this.load.audio('WW2', './assets/WW2.wav');
     }
     
 
     create(){
+        
         // place tile sprite
         this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0, 0);
         
@@ -41,9 +40,6 @@ class MainMenu extends Phaser.Scene{
         keyONE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
         keyTWO = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
         keyTHREE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE);
-
-        // play background music
-        this.sound.play('WW2');
     }
 
     update(){

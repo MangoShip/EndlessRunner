@@ -22,9 +22,19 @@ class Play extends Phaser.Scene{
         this.load.spritesheet('T34hit', './assets/T34hit.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
         this.load.spritesheet('SU85hit', './assets/SU85hit.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
         this.load.spritesheet('KV2hit', './assets/KV2hit.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
+        this.load.audio('WW2', './assets/WW2.wav');
     }
 
     create(){
+        // set up audio, play bgm
+        this.bgm = this.sound.add('WW2', { 
+            mute: false,
+            volume: 1,
+            rate: 1,
+            loop: true 
+        });
+        this.bgm.play();
+
         // place tile sprite
         this.background = this.add.tileSprite(0, 0, 640, 480, 'background').setOrigin(0, 0);
 
