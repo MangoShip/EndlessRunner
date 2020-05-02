@@ -192,7 +192,7 @@ class Play extends Phaser.Scene{
 
         // loop that spawns powerups
         this.time.addEvent({
-            delay: 15000, // every 15 seconds
+            delay: 1000, // every 15 seconds
             callback: ()=>{
                 var val = Phaser.Math.Between(0,2);
                 if(val == 0) {
@@ -335,7 +335,7 @@ class Play extends Phaser.Scene{
     // function that adds HP Powerups
     addHP() {
         if(!this.gameOver){
-            let HP = new HP_PowerUp(this, this.game.config.width, Phaser.Math.Between(50, 300), 'HP').setOrigin(0, 0).setScale(1.5);
+            let HP = new HP_PowerUp(this, this.game.config.width, Phaser.Math.Between(105, 300), 'HP').setOrigin(0, 0).setScale(1.5);
             this.powerUpGroup.add(HP); // add it to existing group
         }
     }
@@ -343,7 +343,7 @@ class Play extends Phaser.Scene{
     // function that adds AD Powerups
     addAD() {
         if(!this.gameOver){
-            let AD = new AD_PowerUp(this, this.game.config.width, Phaser.Math.Between(50, 300), 'AD').setOrigin(0, 0).setScale(1.5);
+            let AD = new AD_PowerUp(this, this.game.config.width, Phaser.Math.Between(105, 300), 'AD').setOrigin(0, 0).setScale(1.5);
             this.powerUpGroup.add(AD); // add it to existing group
         }
     }
@@ -351,7 +351,7 @@ class Play extends Phaser.Scene{
     // function that adds AS Powerups
     addAS() {
         if(!this.gameOver){
-            let AS = new AS_PowerUp(this, this.game.config.width, Phaser.Math.Between(50, 300), 'AS').setOrigin(0, 0).setScale(1.5);
+            let AS = new AS_PowerUp(this, this.game.config.width, Phaser.Math.Between(105, 300), 'AS').setOrigin(0, 0).setScale(1.5);
             this.powerUpGroup.add(AS); // add it to existing group
         }
     }
