@@ -9,9 +9,9 @@ class Play extends Phaser.Scene{
         this.load.spritesheet('player2', './assets/SU85.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
         this.load.spritesheet('player3', './assets/KV2.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
         this.load.image('player_bullet', './assets/player_bullet.png');
+        this.load.spritesheet('bullet_effect', './assets/bullet_effect.png', {frameWidth: 16, frameHeight: 16, startFrame: 0, endFrame: 2});
         this.load.spritesheet('enemy_tank', './assets/enemytank.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
         this.load.spritesheet('enemy_infantry', './assets/enemyinfantry.png', {frameWidth: 50, frameHeight: 40, startFrame: 0, endFrame: 3});
-        this.load.image('enemy_bullet', './assets/enemy_bullet.png');
         this.load.image('rock', './assets/rock.png');
         this.load.image('tree', './assets/tree.png');
         this.load.image('background', './assets/background.png');
@@ -95,6 +95,13 @@ class Play extends Phaser.Scene{
             key: 'explode',
             frames: this.anims.generateFrameNumbers('explosion', {start: 0, end: 2, first: 0}),
             frameRate: 5,
+        })
+
+        // create animation for bullet effect
+        this.anims.create({
+            key: 'bullet_gone',
+            frames: this.anims.generateFrameNumbers('bullet_effect', {start: 0, end: 2, first: 0}),
+            frameRate: 20,
         })
         
         // add player according to the tank that player has chosen
@@ -208,10 +215,15 @@ class Play extends Phaser.Scene{
 
     // Handles collision between bullet and enemy
     handleCollision(bullet, enemy){;
+        let bullet_trace = this.add.sprite(bullet.x, bullet.y, 'bullet_effect').setOrigin(0.5).setScale(2);
+        bullet_trace.anims.play('bullet_gone');
+        bullet_trace.on('animationcomplete', () => {
+            bullet_trace.destroy(true);
+        })
         bullet.destroy(true);
         enemy.health -= game.settings.damage;
         if(enemy.health <= 0){
-            let boom = this.add.sprite(enemy.x, enemy.y, 'explosion').setOrigin(0, 0).setScale(2);
+            let boom = this.add.sprite(enemy.x, enemy.y, 'explosion').setOrigin(0.2).setScale(2);
             boom.anims.play('explode');
             boom.on('animationcomplete', () => {
                 boom.destroy(true);
