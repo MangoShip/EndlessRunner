@@ -15,7 +15,9 @@ class Play extends Phaser.Scene{
         this.load.image('rock', './assets/rock.png');
         this.load.image('tree', './assets/tree.png');
         this.load.image('background', './assets/background.png');
-        this.load.image('power_up', './assets/enemy_bullet.png');
+        this.load.image('HP', './assets/HP_Powerup.png');
+        this.load.image('AS', './assets/AS_Powerup.png');
+        this.load.image('AD', './assets/AD_Powerup.png');
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 50, frameHeight: 50, startFrame: 0, endFrame: 2});
         this.load.spritesheet('T34hit', './assets/T34hit.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
         this.load.spritesheet('SU85hit', './assets/SU85hit.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
@@ -137,9 +139,6 @@ class Play extends Phaser.Scene{
             runChildUpdate: true
         })
 
-        // add powerup
-        this.powerUp = new PowerUp(this, 600, 200, 'power_up').setOrigin(0,0);
-
         // define keyboard keys
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
@@ -147,6 +146,11 @@ class Play extends Phaser.Scene{
 
         // set up enemy group and add first enemy to kick things off
         this.enemyGroup = this.physics.add.group({
+            runChildUpdate: true    // make sure update runs on group children
+        });
+
+        // set up powerup group
+        this.powerUpGroup = this.physics.add.group({
             runChildUpdate: true    // make sure update runs on group children
         });
 
@@ -182,6 +186,26 @@ class Play extends Phaser.Scene{
             delay: 3000, // every 3 seconds
             callback: ()=>{
                 this.addRock();
+            },
+            loop: true
+        })
+
+        // loop that spawns powerups
+        this.time.addEvent({
+            delay: 15000, // every 15 seconds
+            callback: ()=>{
+                var val = Phaser.Math.Between(0,2);
+                if(val == 0) {
+                    this.addHP();
+                }
+
+                else if(val == 1) {
+                    this.addAS();
+                }
+
+                else {
+                    this.addAD();
+                }
             },
             loop: true
         })
@@ -308,6 +332,30 @@ class Play extends Phaser.Scene{
         }
     }
 
+    // function that adds HP Powerups
+    addHP() {
+        if(!this.gameOver){
+            let HP = new HP_PowerUp(this, this.game.config.width, Phaser.Math.Between(50, 300), 'HP').setOrigin(0, 0).setScale(1.5);
+            this.powerUpGroup.add(HP); // add it to existing group
+        }
+    }
+
+    // function that adds AD Powerups
+    addAD() {
+        if(!this.gameOver){
+            let AD = new AD_PowerUp(this, this.game.config.width, Phaser.Math.Between(50, 300), 'AD').setOrigin(0, 0).setScale(1.5);
+            this.powerUpGroup.add(AD); // add it to existing group
+        }
+    }
+
+    // function that adds AS Powerups
+    addAS() {
+        if(!this.gameOver){
+            let AS = new AS_PowerUp(this, this.game.config.width, Phaser.Math.Between(50, 300), 'AS').setOrigin(0, 0).setScale(1.5);
+            this.powerUpGroup.add(AS); // add it to existing group
+        }
+    }
+
     update(){
         // gameover when playerHealth is 0
         if(this.playerHealth == 0){
@@ -351,7 +399,6 @@ class Play extends Phaser.Scene{
             if(Phaser.Input.Keyboard.JustDown(keyF)){
                 this.scene.start("mainMenuScene");
             }
-
         }
     }
 
@@ -362,5 +409,4 @@ class Play extends Phaser.Scene{
             bullet.fire(x, y);
         }
     }
-
 }
