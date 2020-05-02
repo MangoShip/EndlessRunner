@@ -186,19 +186,18 @@ class Play extends Phaser.Scene{
 
         //score display
         this.scoreConfig = {
-            fontFamily: 'Courier',
+            fontFamily: 'BIZ UDMincho Medium',
             fontSize: '28px',
-            backgroundColor: '#F3B141',
-            color: '#843605',
+            color: "#FFFFFF",
             align: 'right',
             padding: {
                 top: 5,
                 bottom: 5,
             },
-            fixedWidth: 100
+            fixedWidth: 0
         }
-        this.scoreLeft = this.add.text(69, 54, this.Score, this.scoreConfig);
-        this.healthDisplay = this.add.text(250, 54, 'Hp:'+this.playerHealth, this.scoreConfig);
+        this.score = this.add.text(40, 415, 'Score: ' + this.Score, this.scoreConfig);
+        this.healthDisplay = this.add.text(535, 415, 'Hp: '+this.playerHealth, this.scoreConfig);
 
         this.physics.add.collider(this.bullets, this.enemyGroup, this.handleCollision, null, this);
         this.physics.add.collider(this.player, this.enemyGroup, this.playerCollision, null, this);
