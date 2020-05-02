@@ -34,7 +34,6 @@ class MainMenu extends Phaser.Scene{
         this.add.text(centerX, centerY - textSpacer, 'ENDLESS RUNNER', menuConfig).setOrigin(0.5);
         this.add.text(centerX, centerY - textSpacer/3, '1: Tank Selection', menuConfig).setOrigin(0.5);
         this.add.text(centerX, centerY + textSpacer/3, '2: Tutorial', menuConfig).setOrigin(0.5);
-        this.add.text(centerX, centerY + textSpacer, '3: Settings', menuConfig).setOrigin(0.5);
         
         // define keys
         keyONE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
@@ -50,10 +49,6 @@ class MainMenu extends Phaser.Scene{
         if(Phaser.Input.Keyboard.JustDown(keyTWO)){
             // tutorial
             this.scene.start("tutorialScene");
-        }
-        if(Phaser.Input.Keyboard.JustDown(keyTHREE)){
-            // settings
-            this.scene.start("settingScene");
         }
     }
 }
