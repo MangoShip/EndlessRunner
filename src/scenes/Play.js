@@ -17,6 +17,9 @@ class Play extends Phaser.Scene{
         this.load.image('background', './assets/background.png');
         this.load.image('power_up', './assets/enemy_bullet.png');
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 50, frameHeight: 50, startFrame: 0, endFrame: 2});
+        this.load.spritesheet('T34hit', './assets/T34hit.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
+        this.load.spritesheet('SU85hit', './assets/SU85hit.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
+        this.load.spritesheet('KV2hit', './assets/KV2hit.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
     }
 
     create(){
@@ -34,6 +37,13 @@ class Play extends Phaser.Scene{
             repeat: -1
         })
 
+        // create animation for T34 hit
+        this.anims.create({
+            key: 'T34_hit',
+            frames: this.anims.generateFrameNumbers('T34hit', {start: 0, end: 3, first: 0}),
+            frameRate: 10,
+        })
+
         // create animation for SU85
         this.anims.create({
             key: 'su85_moving',
@@ -42,12 +52,26 @@ class Play extends Phaser.Scene{
             repeat: -1
         })
 
+        // create animation for SU85 hit
+        this.anims.create({
+            key: 'SU85_hit',
+            frames: this.anims.generateFrameNumbers('SU85hit', {start: 0, end: 3, first: 0}),
+            frameRate: 10,
+        })
+
         // create animation for KV2
         this.anims.create({
             key: 'kv2_moving',
             frames: this.anims.generateFrameNumbers('player3', {start: 0, end: 3, first: 0}),
             frameRate: 6,
             repeat: -1
+        })
+
+        // create animation for KV2 hit
+        this.anims.create({
+            key: 'KV2_hit',
+            frames: this.anims.generateFrameNumbers('KV2hit', {start: 0, end: 3, first: 0}),
+            frameRate: 10,
         })
 
         // create animation for enemy tank
@@ -189,7 +213,7 @@ class Play extends Phaser.Scene{
         boom.on('animationcomplete', () => {
             boom.destroy(true);
         })
-        
+
         enemy.destroy(true);
     }
     
@@ -197,7 +221,23 @@ class Play extends Phaser.Scene{
     playerCollision(player, enemy){
         this.playerHealth -= 1;
         this.healthDisplay.text = 'Hp:' + this.playerHealth;
-        
+
+        if(game.settings.tank == 1){
+            this.player.anims.chain('T34_hit');
+            this.player.anims.stop();
+            this.player.anims.chain('t34_moving');
+        }
+        else if(game.settings.tank == 2){
+            this.player.anims.chain('SU85_hit');
+            this.player.anims.stop();
+            this.player.anims.chain('su85_moving');
+        }
+        else{
+            this.player.anims.chain('KV2_hit');
+            this.player.anims.stop();
+            this.player.anims.chain('kv2_moving');
+        }
+
         let boom = this.add.sprite(enemy.x, enemy.y, 'explosion').setOrigin(0, 0).setScale(2);
         boom.anims.play('explode');
         boom.on('animationcomplete', () => {
@@ -209,25 +249,25 @@ class Play extends Phaser.Scene{
     // Changed coordinates for spawn to avoid sprites going over screen. 
     // function that adds enemy tank to the enemyGroup
     addEnemyTank() {
-        let enemy = new EnemyTank(this, this.game.config.width, Phaser.Math.Between(20, 400), 'enemy_tank').setOrigin(0, 0).setScale(2);
+        let enemy = new EnemyTank(this, this.game.config.width, Phaser.Math.Between(80, 334), 'enemy_tank').setOrigin(0, 0).setScale(2);
         this.enemyGroup.add(enemy); // add it to existing group
     }
 
     // function that adds enemy infantry to the enemyGroup
     addEnemyInfantry() {
-        let enemy = new EnemyInfantry(this, this.game.config.width, Phaser.Math.Between(20, 400), 'enemy_infrantry').setOrigin(0, 0).setScale(2);
+        let enemy = new EnemyInfantry(this, this.game.config.width, Phaser.Math.Between(60, 310), 'enemy_infrantry').setOrigin(0, 0).setScale(2);
         this.enemyGroup.add(enemy); // add it to existing group
     }
 
     // function that adds rocks
     addRock() {
-        let rock = new Rock(this, this.game.config.width, Phaser.Math.Between(34, 400), 'rock').setOrigin(0, 0).setScale(1);
+        let rock = new Rock(this, this.game.config.width, Phaser.Math.Between(80, 340), 'rock').setOrigin(0, 0).setScale(1);
         this.enemyGroup.add(rock); // add it to existing group
     }
 
     // function that adds trees
     addTree() {
-        let tree = new Tree(this, this.game.config.width, Phaser.Math.Between(80, 350), 'tree').setOrigin(0, 0).setScale(1.5);
+        let tree = new Tree(this, this.game.config.width, Phaser.Math.Between(50, 300), 'tree').setOrigin(0, 0).setScale(1.5);
         this.enemyGroup.add(tree); // add it to existing group
     }
 
@@ -242,14 +282,14 @@ class Play extends Phaser.Scene{
 
         // move player up
         if(keyUP.isDown){
-            if(this.player.y > 0){
+            if(this.player.y > 80){
                 this.player.y -= 2;
             }
         }
 
         // move player down
         if(keyDOWN.isDown){
-            if(this.player.y < 430){
+            if(this.player.y < 334){
                 this.player.y += 2;
             }
         }
