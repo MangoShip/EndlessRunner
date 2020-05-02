@@ -182,7 +182,7 @@ class Play extends Phaser.Scene{
         //score
         this.Score = 0;
 
-        this.playerHealth = 3;
+        this.playerHealth = game.settings.health;
 
         //score display
         this.scoreConfig = {
@@ -282,14 +282,14 @@ class Play extends Phaser.Scene{
         // move player up
         if(keyUP.isDown){
             if(this.player.y > 80){
-                this.player.y -= 2;
+                this.player.y -= game.settings.speed;
             }
         }
 
         // move player down
         if(keyDOWN.isDown){
             if(this.player.y < 334){
-                this.player.y += 2;
+                this.player.y += game.settings.speed;
             }
         }
 

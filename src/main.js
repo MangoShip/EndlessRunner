@@ -17,7 +17,7 @@ let game = new Phaser.Game(config);
 // define game settings
 game.setting = {
     tank: 0,   // tank type
-    armor: 0, // player armor
+    health: 0, // player armor
     damage: 0, // player damage
     speed: 0 // player speed
 }
