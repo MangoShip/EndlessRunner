@@ -201,6 +201,9 @@ class Play extends Phaser.Scene{
 
         this.physics.add.collider(this.bullets, this.enemyGroup, this.handleCollision, null, this);
         this.physics.add.collider(this.player, this.enemyGroup, this.playerCollision, null, this);
+
+        // Print GAME OVER Screen Once
+        this.printOnce = 1;
     }
 
     // Handles collision between bullet and enemy
@@ -247,61 +250,96 @@ class Play extends Phaser.Scene{
             boom.destroy(true);
         })
         enemy.destroy(true);
+
+        if(this.playerHealth == 0){
+            let boom = this.add.sprite(player.x, player.y, 'explosion').setOrigin(0, 0).setScale(2);
+            boom.anims.play('explode');
+            boom.on('animationcomplete', () => {
+                boom.destroy(true);
+            })
+            player.destroy(true);
+        }
     }
     
     // Changed coordinates for spawn to avoid sprites going over screen. 
     // function that adds enemy tank to the enemyGroup
     addEnemyTank() {
-        let enemy = new EnemyTank(this, this.game.config.width, Phaser.Math.Between(80, 334), 'enemy_tank').setOrigin(0, 0).setScale(2);
-        this.enemyGroup.add(enemy); // add it to existing group
+        if(!this.gameOver){
+            let enemy = new EnemyTank(this, this.game.config.width, Phaser.Math.Between(80, 334), 'enemy_tank').setOrigin(0, 0).setScale(2);
+            this.enemyGroup.add(enemy); // add it to existing group
+        }
     }
 
     // function that adds enemy infantry to the enemyGroup
     addEnemyInfantry() {
-        let enemy = new EnemyInfantry(this, this.game.config.width, Phaser.Math.Between(60, 310), 'enemy_infrantry').setOrigin(0, 0).setScale(2);
-        this.enemyGroup.add(enemy); // add it to existing group
+        if(!this.gameOver){
+            let enemy = new EnemyInfantry(this, this.game.config.width, Phaser.Math.Between(60, 310), 'enemy_infrantry').setOrigin(0, 0).setScale(2);
+            this.enemyGroup.add(enemy); // add it to existing group
+        }
     }
 
     // function that adds rocks
     addRock() {
-        let rock = new Rock(this, this.game.config.width, Phaser.Math.Between(80, 340), 'rock').setOrigin(0, 0).setScale(1);
-        this.enemyGroup.add(rock); // add it to existing group
+        if(!this.gameOver){
+            let rock = new Rock(this, this.game.config.width, Phaser.Math.Between(80, 340), 'rock').setOrigin(0, 0).setScale(1);
+            this.enemyGroup.add(rock); // add it to existing group
+        }
     }
 
     // function that adds trees
     addTree() {
-        let tree = new Tree(this, this.game.config.width, Phaser.Math.Between(50, 300), 'tree').setOrigin(0, 0).setScale(1.5);
-        this.enemyGroup.add(tree); // add it to existing group
+        if(!this.gameOver){
+            let tree = new Tree(this, this.game.config.width, Phaser.Math.Between(50, 300), 'tree').setOrigin(0, 0).setScale(1.5);
+            this.enemyGroup.add(tree); // add it to existing group
+        }
     }
 
     update(){
-        // scroll background
-        this.background.tilePositionX += 0.75;
-        
         // gameover when playerHealth is 0
         if(this.playerHealth == 0){
-            console.log("GameOver");
+            this.gameOver = true;
         }
+        
+        // NOT game over
+        if(!this.gameOver){
+            // scroll background
+            this.background.tilePositionX += 0.75;
 
-        // move player up
-        if(keyUP.isDown){
-            if(this.player.y > 80){
-                this.player.y -= game.settings.speed;
+            // move player up
+            if(keyUP.isDown){
+                if(this.player.y > 80){
+                    this.player.y -= game.settings.speed;
+                }
+            }
+
+            // move player down
+            if(keyDOWN.isDown){
+                if(this.player.y < 334){
+                    this.player.y += game.settings.speed;
+                }
+            }
+
+            // Add delay between each shooting. 
+            if(this.input.keyboard.checkDown(keyF, 500)){
+                this.shoot(this.player.x, this.player.y);
             }
         }
-
-        // move player down
-        if(keyDOWN.isDown){
-            if(this.player.y < 334){
-                this.player.y += game.settings.speed;
+        else{ // Game Over
+            if(this.printOnce == 1){
+                this.scoreConfig.fontSize = "60px";
+                this.add.text(game.config.width/2, (game.config.height/2) - 50, 'GAME OVER', this.scoreConfig).setOrigin(0.5);
+                this.scoreConfig.fontSize = "28px";
+                this.add.text(game.config.width/2, (game.config.height/2) + 20, 'YOUR SCORE: ' + this.Score, this.scoreConfig).setOrigin(0.5);
+                this.add.text(game.config.width/2, (game.config.height/2) + 70, 'Press (F) to go back to main menu', this.scoreConfig).setOrigin(0.5);
+                this.printOnce = 2;
             }
-        }
 
-        // Add delay between each shooting. 
-        if(this.input.keyboard.checkDown(keyF, 500)){
-            this.shoot(this.player.x, this.player.y);
+            // go back to main menu
+            if(Phaser.Input.Keyboard.JustDown(keyF)){
+                this.scene.start("mainMenuScene");
+            }
+
         }
-       
     }
 
     shoot(x, y){
