@@ -5,6 +5,7 @@ class MainMenu extends Phaser.Scene{
 
     preload(){
         this.load.image('background', './assets/background.png');
+        // load background music
         this.load.audio('WW2', './assets/WW2.wav');
     }
     
@@ -41,6 +42,7 @@ class MainMenu extends Phaser.Scene{
         keyTWO = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO);
         keyTHREE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE);
 
+        // play background music
         this.sound.play('WW2');
     }
 
