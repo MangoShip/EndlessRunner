@@ -256,6 +256,19 @@ class Play extends Phaser.Scene{
         this.tankMoving = this.sound.add('sfx_tankMoving', {volume: 0.5});
         this.tankMoving.setLoop(true);
         this.tankMoving.play();
+
+        this.shootAgain = true;
+        this.time.addEvent({
+            delay: 2000,
+            callback: ()=>{
+                this.shootDelay();
+            },
+            loop: true
+        })
+    }
+
+    shootDelay(){
+        this.shootAgain = true;
     }
 
     // Handles collision between bullet and enemy
@@ -404,9 +417,12 @@ class Play extends Phaser.Scene{
             }
 
             // Add delay between each shooting. 
-            if(this.input.keyboard.checkDown(keyF, 500)){
-                this.tankShooting.play();
-                this.shoot(this.player.x, this.player.y);
+            if(Phaser.Input.Keyboard.JustDown(keyF)){
+                if(this.shootAgain == true){
+                    this.tankShooting.play();
+                    this.shoot(this.player.x, this.player.y);
+                    this.shootAgain = false;
+                }
             }
         }
         else{ // Game Over
