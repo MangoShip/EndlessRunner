@@ -7,6 +7,18 @@ class AD_PowerUp extends Phaser.GameObjects.Sprite{
     update(){
         this.x -= 1;
     }
+    
+    isHP() {
+        return false;
+    }
+
+    isAS() {
+        return false;
+    }
+
+    isAD() {
+        return true;
+    }
 
     reset() {
         this.x = game.config.width;
