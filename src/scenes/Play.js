@@ -272,6 +272,7 @@ class Play extends Phaser.Scene{
         this.shootAgain = true;
     }
 
+    // timer for each delayed shot
     var = 2000;
 
     shootDelay(){
@@ -344,14 +345,17 @@ class Play extends Phaser.Scene{
 
     // Handles collision between player and HP powerup
     hpCollision(player, HP){
+        HP.destroy();
+        this.sound.play('sfx_powerUp');
         this.playerHealth += 1;
         this.healthDisplay.text = 'Hp:' + this.playerHealth;
-        HP.destroy();
     }
 
     // Handles collision between player and AS powerup
     asCollision(player, AS){
         AS.destroy();
+        this.sound.play('sfx_powerUp');
+        // shorter delay between each shot
         this.var = 1000;
         this.time.addEvent({
             delay: 5000,
@@ -364,6 +368,7 @@ class Play extends Phaser.Scene{
     // Handles collision between player and AD powerup
     adCollision(player, AD){
         AD.destroy();
+        this.sound.play('sfx_powerUp');
         
     }
 
