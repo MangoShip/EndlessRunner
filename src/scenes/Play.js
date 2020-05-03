@@ -165,8 +165,18 @@ class Play extends Phaser.Scene{
             runChildUpdate: true    // make sure update runs on group children
         });
 
-        // set up powerup group
-        this.powerUpGroup = this.physics.add.group({
+        // set up hp powerup group
+        this.hpGroup = this.physics.add.group({
+            runChildUpdate: true    // make sure update runs on group children
+        });
+
+        // set up as powerup group
+        this.asGroup = this.physics.add.group({
+            runChildUpdate: true    // make sure update runs on group children
+        });
+
+        // set up ad powerup group
+        this.adGroup = this.physics.add.group({
             runChildUpdate: true    // make sure update runs on group children
         });
 
@@ -208,7 +218,7 @@ class Play extends Phaser.Scene{
 
         // loop that spawns powerups
         this.time.addEvent({
-            delay: 15000, // every 15 seconds
+            delay: 1000, // every 15 seconds
             callback: ()=>{
                 var val = Phaser.Math.Between(0,2);
                 if(val == 0) {
@@ -248,6 +258,9 @@ class Play extends Phaser.Scene{
 
         this.physics.add.collider(this.bullets, this.enemyGroup, this.handleCollision, null, this);
         this.physics.add.collider(this.player, this.enemyGroup, this.playerCollision, null, this);
+        this.physics.add.collider(this.player, this.hpGroup, this.hpCollision, null, this);
+        this.physics.add.collider(this.player, this.asGroup, this.asCollision, null, this);
+        this.physics.add.collider(this.player, this.adGroup, this.adCollision, null, this);
 
         // Print GAME OVER Screen Once
         this.printOnce = 1;
@@ -334,7 +347,26 @@ class Play extends Phaser.Scene{
             player.destroy(true);
         }
     }
-    
+
+    // Handles collision between player and HP powerup
+    hpCollision(player, HP){
+        this.playerHealth += 1;
+        this.healthDisplay.text = 'Hp:' + this.playerHealth;
+        HP.destroy();
+    }
+
+    // Handles collision between player and AS powerup
+    asCollision(player, AS){
+        
+        AS.destroy();
+    }
+
+    // Handles collision between player and AD powerup
+    adCollision(player, AD){
+        
+        AD.destroy();
+    }
+
     // Changed coordinates for spawn to avoid sprites going over screen. 
     // function that adds enemy tank to the enemyGroup
     addEnemyTank() {
@@ -372,7 +404,7 @@ class Play extends Phaser.Scene{
     addHP() {
         if(!this.gameOver){
             let HP = new HP_PowerUp(this, this.game.config.width, Phaser.Math.Between(105, 300), 'HP').setOrigin(0, 0).setScale(1.5);
-            this.powerUpGroup.add(HP); // add it to existing group
+            this.hpGroup.add(HP); // add it to existing group
         }
     }
 
@@ -380,7 +412,7 @@ class Play extends Phaser.Scene{
     addAD() {
         if(!this.gameOver){
             let AD = new AD_PowerUp(this, this.game.config.width, Phaser.Math.Between(105, 300), 'AD').setOrigin(0, 0).setScale(1.5);
-            this.powerUpGroup.add(AD); // add it to existing group
+            this.adGroup.add(AD); // add it to existing group
         }
     }
 
@@ -388,7 +420,7 @@ class Play extends Phaser.Scene{
     addAS() {
         if(!this.gameOver){
             let AS = new AS_PowerUp(this, this.game.config.width, Phaser.Math.Between(105, 300), 'AS').setOrigin(0, 0).setScale(1.5);
-            this.powerUpGroup.add(AS); // add it to existing group
+            this.asGroup.add(AS); // add it to existing group
         }
     }
 
