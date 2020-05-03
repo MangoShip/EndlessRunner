@@ -482,6 +482,8 @@ class Play extends Phaser.Scene{
             if(Phaser.Input.Keyboard.JustDown(keyF)){
                 this.scene.start("mainMenuScene");
                 this.sound.play('select');
+                this.bgm.stop();
+                this.tankMoving.stop();
             }
         }
     }
