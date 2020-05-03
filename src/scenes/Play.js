@@ -27,7 +27,7 @@ class Play extends Phaser.Scene{
         this.load.audio('sfx_explosion', './assets/explosion.wav');
         this.load.audio('sfx_powerUp', './assets/powerUp.wav');
         this.load.audio('sfx_tankFire', './assets/tankFire.wav');
-        this.load.audio('sfx_tankMoving', './assets/tankMoving.wav');
+        this.load.audio('sfx_tankMoving', './assets/tankMoving.mp3');
         this.load.audio('select', './assets/titleSelect.wav');
     }
 
@@ -262,6 +262,11 @@ class Play extends Phaser.Scene{
 
         // Print GAME OVER Screen Once
         this.printOnce = 1;
+
+        this.tankShooting = this.sound.add('sfx_tankFire', {volume: 0.5});
+        this.tankMoving = this.sound.add('sfx_tankMoving', {volume: 0.5});
+        this.tankMoving.setLoop(true);
+        this.tankMoving.play();
     }
 
     // Handles collision between bullet and enemy
@@ -405,9 +410,6 @@ class Play extends Phaser.Scene{
             // move player up
             if(keyUP.isDown){
                 if(this.player.y > 80){
-                    this.tankMoving = this.sound.add('sfx_tankMoving');
-                    //this.sound.play('sfx_tankMoving');
-                    this.tankMoving.play();
                     this.player.y -= game.settings.speed;
                 }
             }
@@ -415,14 +417,12 @@ class Play extends Phaser.Scene{
             // move player down
             if(keyDOWN.isDown){
                 if(this.player.y < 334){
-                   // this.sound.play('sfx_tankMoving');
                     this.player.y += game.settings.speed;
                 }
             }
 
             // Add delay between each shooting. 
             if(this.input.keyboard.checkDown(keyF, 500)){
-                this.tankShooting = this.sound.add('sfx_tankFire', {volume: 0.5});
                 this.tankShooting.play();
                 this.shoot(this.player.x, this.player.y);
             }
