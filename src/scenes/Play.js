@@ -18,6 +18,9 @@ class Play extends Phaser.Scene{
         this.load.image('HP', './assets/HP_Powerup.png');
         this.load.image('AS', './assets/AS_Powerup.png');
         this.load.image('AD', './assets/AD_Powerup.png');
+        this.load.spritesheet('HP_Effect', './assets/HP_Effect.png', {frameWidth: 16, frameHeight: 16, startFrame: 0, endFrame: 2});
+        this.load.spritesheet('AS_Effect', './assets/AS_Effect.png', {frameWidth: 16, frameHeight: 16, startFrame: 0, endFrame: 2});
+        this.load.spritesheet('AD_Effect', './assets/AD_Effect.png', {frameWidth: 16, frameHeight: 16, startFrame: 0, endFrame: 2});
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 50, frameHeight: 50, startFrame: 0, endFrame: 2});
         this.load.spritesheet('T34hit', './assets/T34hit.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
         this.load.spritesheet('SU85hit', './assets/SU85hit.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
@@ -120,6 +123,27 @@ class Play extends Phaser.Scene{
             key: 'bullet_gone',
             frames: this.anims.generateFrameNumbers('bullet_effect', {start: 0, end: 2, first: 0}),
             frameRate: 20,
+        })
+
+        // create animation for power-up effect (HP)
+        this.anims.create({
+            key: 'HP_collect',
+            frames: this.anims.generateFrameNumbers('HP_Effect', {start: 0, end: 2, first: 0}),
+            frameRate: 10,
+        })
+
+        // create animation for power-up effect (AS)
+        this.anims.create({
+            key: 'AS_collect',
+            frames: this.anims.generateFrameNumbers('AS_Effect', {start: 0, end: 2, first: 0}),
+            frameRate: 10,
+        })
+
+        // create animation for power-up effect (AD)
+        this.anims.create({
+            key: 'AD_collect',
+            frames: this.anims.generateFrameNumbers('AD_Effect', {start: 0, end: 2, first: 0}),
+            frameRate: 10,
         })
         
         // add player according to the tank that player has chosen
@@ -254,7 +278,7 @@ class Play extends Phaser.Scene{
             fixedWidth: 0
         }
         this.scoreDisplay = this.add.text(40, 415, 'Score: ' + this.Score, this.scoreConfig);
-        this.healthDisplay = this.add.text(535, 415, 'Hp: '+this.playerHealth, this.scoreConfig);
+        this.healthDisplay = this.add.text(535, 415, 'Hp: '+ this.playerHealth, this.scoreConfig);
 
         this.physics.add.collider(this.bullets, this.enemyGroup, this.handleCollision, null, this);
         this.physics.add.collider(this.player, this.enemyGroup, this.playerCollision, null, this);
@@ -266,7 +290,7 @@ class Play extends Phaser.Scene{
         this.printOnce = 1;
 
         this.tankShooting = this.sound.add('sfx_tankFire', {volume: 0.5});
-        this.tankMoving = this.sound.add('sfx_tankMoving', {volume: 0.5});
+        this.tankMoving = this.sound.add('sfx_tankMoving', {volume: 0.2});
         this.tankMoving.setLoop(true);
         this.tankMoving.play();
         this.shootAgain = true;
@@ -346,8 +370,14 @@ class Play extends Phaser.Scene{
     // Handles collision between player and HP powerup
     // Increases player's HP by 1
     hpCollision(player, HP){
+        let HP_effect = this.add.sprite(HP.x, HP.y, 'HP_Effect').setOrigin(0, 0).setScale(2.5);
         HP.destroy();
+        HP_effect.anims.play('HP_collect');
         this.sound.play('sfx_powerUp');
+        HP_effect.on('animationcomplete', () => {
+            HP_effect.destroy(true);
+        })
+
         this.playerHealth += 1;
         this.healthDisplay.text = 'Hp:' + this.playerHealth;
     }
@@ -355,8 +385,14 @@ class Play extends Phaser.Scene{
     // Handles collision between player and AS powerup
     // Delay between each shot reduced to 1 second for a span of 8 sec
     asCollision(player, AS){
+        let AS_effect = this.add.sprite(AS.x, AS.y, 'AS_Effect').setOrigin(0, 0).setScale(2.5);
         AS.destroy();
         this.sound.play('sfx_powerUp');
+        AS_effect.anims.play('AS_collect');
+        AS_effect.on('animationcomplete', () => {
+            AS_effect.destroy(true);
+        })
+        
         // shorter delay between each shot
         this.var = 1000;
         this.time.addEvent({
@@ -370,8 +406,14 @@ class Play extends Phaser.Scene{
     // Handles collision between player and AD powerup
     // Bullet damage increased by 1 for a span of 8 sec
     adCollision(player, AD){
+        let AD_effect = this.add.sprite(AD.x, AD.y, 'AD_Effect').setOrigin(0, 0).setScale(2.5);
         AD.destroy();
         this.sound.play('sfx_powerUp');
+        AD_effect.anims.play('AD_collect');
+        AD_effect.on('animationcomplete', () => {
+            AD_effect.destroy(true);
+        })
+
         game.settings.damage += 1;
         this.time.addEvent({
             delay: 8000,
