@@ -218,7 +218,7 @@ class Play extends Phaser.Scene{
 
         // loop that spawns powerups
         this.time.addEvent({
-            delay: 1000, // every 15 seconds
+            delay: 15000, // every 15 seconds
             callback: ()=>{
                 var val = Phaser.Math.Between(0,2);
                 if(val == 0) {
