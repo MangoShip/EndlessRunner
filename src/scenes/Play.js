@@ -218,7 +218,7 @@ class Play extends Phaser.Scene{
 
         // loop that spawns powerups
         this.time.addEvent({
-            delay: 1000, // every 15 seconds
+            delay: 15000, // every 15 seconds
             callback: ()=>{
                 var val = Phaser.Math.Between(0,2);
                 if(val == 0) {
@@ -272,7 +272,7 @@ class Play extends Phaser.Scene{
         this.shootAgain = true;
     }
 
-    // timer for each delayed shot
+    // timer for each delayed shot in ms
     var = 2000;
 
     shootDelay(){
@@ -344,6 +344,7 @@ class Play extends Phaser.Scene{
     }
 
     // Handles collision between player and HP powerup
+    // Increases player's HP by 1
     hpCollision(player, HP){
         HP.destroy();
         this.sound.play('sfx_powerUp');
@@ -352,13 +353,14 @@ class Play extends Phaser.Scene{
     }
 
     // Handles collision between player and AS powerup
+    // Delay between each shot reduced to 1 second for a span of 8 sec
     asCollision(player, AS){
         AS.destroy();
         this.sound.play('sfx_powerUp');
         // shorter delay between each shot
         this.var = 1000;
         this.time.addEvent({
-            delay: 5000,
+            delay: 8000,
             callback: ()=>{
                 this.var = 2000;
             },
@@ -366,10 +368,17 @@ class Play extends Phaser.Scene{
     }
 
     // Handles collision between player and AD powerup
+    // Bullet damage increased by 1 for a span of 8 sec
     adCollision(player, AD){
         AD.destroy();
         this.sound.play('sfx_powerUp');
-        
+        game.settings.damage += 1;
+        this.time.addEvent({
+            delay: 8000,
+            callback: ()=>{
+                game.settings.damage -= 1;
+            },
+        })
     }
 
     // Changed coordinates for spawn to avoid sprites going over screen. 
