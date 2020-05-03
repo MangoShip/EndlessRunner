@@ -23,6 +23,11 @@ class Play extends Phaser.Scene{
         this.load.spritesheet('SU85hit', './assets/SU85hit.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
         this.load.spritesheet('KV2hit', './assets/KV2hit.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
         this.load.audio('WW2', './assets/WW2.wav');
+        this.load.audio('bulletHit', './assets/bulletHit.wav');
+        this.load.audio('expplosion', './assets/explosion.wav');
+        this.load.audio('powerUp', './assets/powerUp.wav');
+        this.load.audio('tankFire', './assets/tankFire.wav');
+        this.load.audio('tankMoving', './assets/tankMoving.wav');
     }
 
     create(){
