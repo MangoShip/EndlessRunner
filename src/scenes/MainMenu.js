@@ -5,6 +5,7 @@ class MainMenu extends Phaser.Scene{
 
     preload(){
         this.load.image('background', './assets/background.png');
+        this.load.audio('select', './assets/titleSelect.wav');
     }
     
 
@@ -45,10 +46,12 @@ class MainMenu extends Phaser.Scene{
         if(Phaser.Input.Keyboard.JustDown(keyONE)){
             // tank selection
             this.scene.start("tankSelectionScene");
+            this.sound.play('select');
         }
         if(Phaser.Input.Keyboard.JustDown(keyTWO)){
             // tutorial
             this.scene.start("tutorialScene");
+            this.sound.play('select');
         }
     }
 }

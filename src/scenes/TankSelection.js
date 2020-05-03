@@ -8,6 +8,7 @@ class TankSelection extends Phaser.Scene{
         this.load.spritesheet('player1', './assets/T34.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
         this.load.spritesheet('player2', './assets/SU85.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
         this.load.spritesheet('player3', './assets/KV2.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
+        this.load.audio('select', './assets/titleSelect.wav');
     }
 
     create(){
@@ -101,6 +102,7 @@ class TankSelection extends Phaser.Scene{
         if(Phaser.Input.Keyboard.JustDown(keyONE)){
             // play with T-34
             this.scene.start("playScene");
+            this.sound.play('select');
             game.settings = {
                 tank: 1,
                 health: 2,
@@ -111,6 +113,7 @@ class TankSelection extends Phaser.Scene{
         if(Phaser.Input.Keyboard.JustDown(keyTWO)){
             // play with SU-85
             this.scene.start("playScene");
+            this.sound.play('select');
             game.settings = {
                 tank: 2,
                 health: 2,
@@ -121,6 +124,7 @@ class TankSelection extends Phaser.Scene{
         if(Phaser.Input.Keyboard.JustDown(keyTHREE)){
             // play with KV-2
             this.scene.start("playScene");
+            this.sound.play('select');
             game.settings = {
                 tank: 3,
                 health: 2,
@@ -131,6 +135,7 @@ class TankSelection extends Phaser.Scene{
         if(Phaser.Input.Keyboard.JustDown(keyFOUR)){
             // go back to main menu
             this.scene.start("mainMenuScene");
+            this.sound.play('select');
         }
     }
 }

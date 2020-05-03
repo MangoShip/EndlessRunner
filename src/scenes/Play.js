@@ -24,10 +24,11 @@ class Play extends Phaser.Scene{
         this.load.spritesheet('KV2hit', './assets/KV2hit.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
         this.load.audio('WW2', './assets/WW2.wav');
         this.load.audio('bulletHit', './assets/bulletHit.wav');
-        this.load.audio('expplosion', './assets/explosion.wav');
-        this.load.audio('powerUp', './assets/powerUp.wav');
-        this.load.audio('tankFire', './assets/tankFire.wav');
-        this.load.audio('tankMoving', './assets/tankMoving.wav');
+        this.load.audio('sfx_explosion', './assets/explosion.wav');
+        this.load.audio('sfx_powerUp', './assets/powerUp.wav');
+        this.load.audio('sfx_tankFire', './assets/tankFire.wav');
+        this.load.audio('sfx_tankMoving', './assets/tankMoving.wav');
+        this.load.audio('select', './assets/titleSelect.wav');
     }
 
     create(){
@@ -256,14 +257,16 @@ class Play extends Phaser.Scene{
     handleCollision(bullet, enemy){;
         let bullet_trace = this.add.sprite(bullet.x, bullet.y, 'bullet_effect').setOrigin(0.5).setScale(2);
         bullet_trace.anims.play('bullet_gone');
+        this.sound.play('bulletHit');
         bullet_trace.on('animationcomplete', () => {
             bullet_trace.destroy(true);
         })
-        bullet.x = 700;
+        bullet.x = 900;
         enemy.health -= game.settings.damage;
         if(enemy.health <= 0){
             let boom = this.add.sprite(enemy.x, enemy.y, 'explosion').setOrigin(0.2).setScale(2);
             boom.anims.play('explode');
+            this.sound.play('sfx_explosion');
             boom.on('animationcomplete', () => {
                 boom.destroy(true);
             })
@@ -297,6 +300,7 @@ class Play extends Phaser.Scene{
 
         let boom = this.add.sprite(enemy.x, enemy.y, 'explosion').setOrigin(0, 0).setScale(2);
         boom.anims.play('explode');
+        this.sound.play('sfx_explosion');
         boom.on('animationcomplete', () => {
             boom.destroy(true);
         })
@@ -305,6 +309,7 @@ class Play extends Phaser.Scene{
         if(this.playerHealth == 0){
             let boom = this.add.sprite(player.x, player.y, 'explosion').setOrigin(0, 0).setScale(2);
             boom.anims.play('explode');
+            this.sound.play('sfx_explosion');
             boom.on('animationcomplete', () => {
                 boom.destroy(true);
             })
@@ -382,6 +387,9 @@ class Play extends Phaser.Scene{
             // move player up
             if(keyUP.isDown){
                 if(this.player.y > 80){
+                    this.tankMoving = this.sound.add('sfx_tankMoving');
+                    //this.sound.play('sfx_tankMoving');
+                    this.tankMoving.play();
                     this.player.y -= game.settings.speed;
                 }
             }
@@ -389,12 +397,15 @@ class Play extends Phaser.Scene{
             // move player down
             if(keyDOWN.isDown){
                 if(this.player.y < 334){
+                   // this.sound.play('sfx_tankMoving');
                     this.player.y += game.settings.speed;
                 }
             }
 
             // Add delay between each shooting. 
             if(this.input.keyboard.checkDown(keyF, 500)){
+                this.tankShooting = this.sound.add('sfx_tankFire', {volume: 0.5});
+                this.tankShooting.play();
                 this.shoot(this.player.x, this.player.y);
             }
         }
@@ -411,6 +422,7 @@ class Play extends Phaser.Scene{
             // go back to main menu
             if(Phaser.Input.Keyboard.JustDown(keyF)){
                 this.scene.start("mainMenuScene");
+                this.sound.play('select');
             }
         }
     }

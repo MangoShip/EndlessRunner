@@ -7,6 +7,7 @@ class Tutorial extends Phaser.Scene{
         this.load.image('HP', './assets/HP_Powerup.png');
         this.load.image('AS', './assets/AS_Powerup.png');
         this.load.image('AD', './assets/AD_Powerup.png');
+        this.load.audio('select', './assets/titleSelect.wav');
     }
 
     create(){
@@ -52,6 +53,7 @@ class Tutorial extends Phaser.Scene{
         if(Phaser.Input.Keyboard.JustDown(keyONE)){
             // go back to main menu
             this.scene.start("mainMenuScene");
+            this.sound.play('select');
         }
     }
 }
