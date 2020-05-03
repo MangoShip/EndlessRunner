@@ -269,16 +269,10 @@ class Play extends Phaser.Scene{
         this.tankMoving = this.sound.add('sfx_tankMoving', {volume: 0.5});
         this.tankMoving.setLoop(true);
         this.tankMoving.play();
-
         this.shootAgain = true;
-        this.time.addEvent({
-            delay: 2000,
-            callback: ()=>{
-                this.shootDelay();
-            },
-            loop: true
-        })
     }
+
+    var = 2000;
 
     shootDelay(){
         this.shootAgain = true;
@@ -357,14 +351,20 @@ class Play extends Phaser.Scene{
 
     // Handles collision between player and AS powerup
     asCollision(player, AS){
-        
         AS.destroy();
+        this.var = 1000;
+        this.time.addEvent({
+            delay: 5000,
+            callback: ()=>{
+                this.var = 2000;
+            },
+        })
     }
 
     // Handles collision between player and AD powerup
     adCollision(player, AD){
-        
         AD.destroy();
+        
     }
 
     // Changed coordinates for spawn to avoid sprites going over screen. 
@@ -454,6 +454,12 @@ class Play extends Phaser.Scene{
                     this.tankShooting.play();
                     this.shoot(this.player.x, this.player.y);
                     this.shootAgain = false;
+                    this.time.addEvent({
+                        delay: this.var,
+                        callback: ()=>{
+                            this.shootAgain = true;
+                        },
+                    })
                 }
             }
         }
