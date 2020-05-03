@@ -8,18 +8,6 @@ class HP_PowerUp extends Phaser.GameObjects.Sprite{
         this.x -= 1;
     }
 
-    isHP() {
-        return true;
-    }
-
-    isAS() {
-        return false;
-    }
-
-    isAD() {
-        return false;
-    }
-
     reset() {
         this.x = game.config.width;
     }

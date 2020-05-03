@@ -218,7 +218,7 @@ class Play extends Phaser.Scene{
 
         // loop that spawns powerups
         this.time.addEvent({
-            delay: 15000, // every 15 seconds
+            delay: 1000, // every 15 seconds
             callback: ()=>{
                 var val = Phaser.Math.Between(0,2);
                 if(val == 0) {
@@ -259,6 +259,8 @@ class Play extends Phaser.Scene{
         this.physics.add.collider(this.bullets, this.enemyGroup, this.handleCollision, null, this);
         this.physics.add.collider(this.player, this.enemyGroup, this.playerCollision, null, this);
         this.physics.add.collider(this.player, this.hpGroup, this.hpCollision, null, this);
+        this.physics.add.collider(this.player, this.asGroup, this.asCollision, null, this);
+        this.physics.add.collider(this.player, this.adGroup, this.adCollision, null, this);
 
         // Print GAME OVER Screen Once
         this.printOnce = 1;
@@ -333,11 +335,23 @@ class Play extends Phaser.Scene{
         }
     }
 
-    // Handles collision between player and enemy
-    hpCollision(player, hp){
+    // Handles collision between player and HP powerup
+    hpCollision(player, HP){
         this.playerHealth += 1;
         this.healthDisplay.text = 'Hp:' + this.playerHealth;
-        hp.destroy();
+        HP.destroy();
+    }
+
+    // Handles collision between player and AS powerup
+    asCollision(player, AS){
+        
+        AS.destroy();
+    }
+
+    // Handles collision between player and AD powerup
+    adCollision(player, AD){
+        
+        AD.destroy();
     }
 
     // Changed coordinates for spawn to avoid sprites going over screen. 
