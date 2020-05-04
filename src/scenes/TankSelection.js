@@ -7,7 +7,7 @@ class TankSelection extends Phaser.Scene{
         // load spritesheets
         this.load.spritesheet('player1', './assets/T34.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
         this.load.spritesheet('player2', './assets/SU85.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
-        this.load.spritesheet('player3', './assets/KV2.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
+        this.load.spritesheet('player3', './assets/kv2.png', {frameWidth: 60, frameHeight: 30, startFrame: 0, endFrame: 2});
         this.load.audio('select', './assets/titleSelect.wav');
     }
 
