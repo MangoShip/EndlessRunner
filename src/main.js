@@ -1,5 +1,5 @@
 /*
-    Game Title:
+    Game Title: Last Tank Stand
     Group Name: Tekkaden
     Group Members: Mingun Cho, Joonsu Jun, Sean Kang
     Date Completed: 5/3/2020

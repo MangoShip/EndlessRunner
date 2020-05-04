@@ -32,7 +32,7 @@ class MainMenu extends Phaser.Scene{
         let centerY = game.config.height/2;
         let textSpacer = 100;
         
-        this.add.text(centerX, centerY - textSpacer, 'ENDLESS RUNNER', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY - textSpacer, 'LAST TANK STAND', menuConfig).setOrigin(0.5);
         this.add.text(centerX, centerY - textSpacer/3, '1: Tank Selection', menuConfig).setOrigin(0.5);
         this.add.text(centerX, centerY + textSpacer/3, '2: Tutorial', menuConfig).setOrigin(0.5);
         
